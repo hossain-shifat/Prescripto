@@ -86,10 +86,10 @@
   color-scheme: "dark";
 
   /* Base Colors - Soft slate, never pure black */
-  --color-base-100: oklch(20% 0.015 264);           /* Soft dark slate (professional, not harsh) */
-  --color-base-200: oklch(17% 0.015 264);           /* Slightly darker slate */
-  --color-base-300: oklch(14% 0.015 264);           /* Darkest background shade */
-  --color-base-content: oklch(92% 0.01 264);        /* Soft white for text */
+  --color-base-100: oklch(25% 0.015 264);           /* Lighter slate background (not too dark) */
+  --color-base-200: oklch(22% 0.015 264);           /* Medium slate for cards/containers */
+  --color-base-300: oklch(19% 0.015 264);           /* Darker slate for depth */
+  --color-base-content: oklch(94% 0.008 264);       /* Brighter white for excellent readability */
 
   /* Primary - Trust Blue (same hue as light, adjusted luminance) */
   --color-primary: oklch(62% 0.19 264);             /* Slightly brighter for dark bg */
@@ -137,4 +137,3 @@
   --depth: 3;                                       /* Slightly more depth in dark mode */
   --noise: 0;
 }
-

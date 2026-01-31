@@ -17,7 +17,7 @@ export default function Sidebar() {
                 <label htmlFor="my-drawer-5" aria-label="close sidebar" className="drawer-overlay"></label>
                 <div className="menu min-h-full bg-base-200  w-80 p-4">
                     <div className="flex flex-col gap-5">
-                        <div className="border-b-2 border-gray-200 py-2.5 flex justify-between items-center">
+                        <div className="border-b-2 border-base-300 py-2.5 flex justify-between items-center">
                             <Logo />
                             <button className="drawer-close text-primary" onClick={() => setChecked(false)}><X /></button>
                         </div>

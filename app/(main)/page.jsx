@@ -1,9 +1,9 @@
-const page = () => {
+const Home = () => {
     return (
         <div>
-            hello
+
         </div>
     )
 }
 
-export default page
+export default Home

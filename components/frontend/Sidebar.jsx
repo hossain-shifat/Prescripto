@@ -2,7 +2,7 @@
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import { useState } from "react";
-import { MobileNavLinks } from "./NavLinks";
+import { MobileNavLinks } from "./Links";
 
 export default function Sidebar() {
     const [checked, setChecked] = useState(false)
@@ -23,7 +23,7 @@ export default function Sidebar() {
                             <button className="drawer-close text-primary" onClick={() => setChecked(false)}><X /></button>
                         </div>
                         <div>
-                            <MobileNavLinks setChecked={setChecked}/>
+                            <MobileNavLinks setChecked={setChecked} />
                         </div>
                     </div>
                 </div>

@@ -1,9 +1,10 @@
 'use client'
 
-import { navLinks } from "@/configs/navlinks"
+import { footerLinks, navLinks } from "@/configs/NavigationLinks";
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
+// large screen navlinks
 export const NavLinks = () => {
     const pathname = usePathname();
 
@@ -30,7 +31,7 @@ export const NavLinks = () => {
         </ul>
     )
 }
-
+// mobile nav links
 export const MobileNavLinks = ({ setChecked }) => {
     const pathname = usePathname();
 
@@ -53,6 +54,28 @@ export const MobileNavLinks = ({ setChecked }) => {
                                 {navLink.label}
                             </Link>
                         </li>
+                    )
+                })
+            }
+        </ul>
+    )
+}
+
+// footer links
+export const FooterLinks = () => {
+    const pathname = usePathname();
+
+    return (
+        <ul className="grid gap-4 text-[1.01rem]">
+            {
+                footerLinks.map(footerLink => {
+                    return (
+                        <Link
+                            key={footerLink.id}
+                            href={footerLink.href}
+                        >
+                            {footerLink.label}
+                        </Link>
                     )
                 })
             }

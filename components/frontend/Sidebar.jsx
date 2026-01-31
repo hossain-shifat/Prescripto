@@ -19,7 +19,7 @@ export default function Sidebar() {
                     <div className="flex flex-col gap-5">
                         <div className="border-b-2 border-gray-200 py-2.5 flex justify-between items-center">
                             <Logo />
-                            <button className="drawer-close" onClick={() => setChecked(false)}><X /></button>
+                            <button className="drawer-close text-primary" onClick={() => setChecked(false)}><X /></button>
                         </div>
                         <div>
                             <ul>

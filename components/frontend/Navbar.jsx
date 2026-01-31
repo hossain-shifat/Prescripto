@@ -1,6 +1,7 @@
 import { Menu } from "lucide-react";
 import Logo from "./Logo";
 import Sidebar from "./Sidebar";
+import ToggleTheme from "../global/ToggleTheme";
 
 
 export default function Navbar() {
@@ -28,7 +29,7 @@ export default function Navbar() {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                <ToggleTheme />
             </div>
         </div>
     )

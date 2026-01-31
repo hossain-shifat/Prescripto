@@ -3,9 +3,9 @@ import Logo from "./Logo";
 
 export default function Footer() {
     return (
-        <footer className="lg:px-30 bg-base-200/20 text-neutral-content p-10">
+        <footer className="text-base-content lg:px-30 bg-base-200/20 p-10">
             <section className="footer sm:footer-horizontal flex flex-col md:flex-row md:justify-between gap-8">
-                <aside className="flex flex-col gap-2 md:max-w-md">
+                <aside className="flex flex-col gap-10 md:gap-5 md:max-w-md">
                     <Logo />
                     <p>
                         Prescripto simplifies healthcare by connecting patients with verified doctors across specialties. Browse profiles, check availability, read reviews, and book appointments easily. With secure data, instant confirmations, and reminders, managing your health is simple and convenient.

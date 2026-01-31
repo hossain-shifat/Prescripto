@@ -1,8 +1,9 @@
-
-export default function Button({ text, style, smd, rounded }) {
+export default function Button({ text, style = '', smd = false, rounded = false }) {
     return (
-        <div>
-            <button className={`${style} btn btn-primary ${smd === true ? '' : 'hidden md:block'} ${rounded === true ? 'rounded-full' : 'rounded-md'}`}>{text}</button>
-        </div>
+        <button
+            className={`btn btn-primary ${style} ${smd ? '' : 'hidden md:block'} ${rounded ? 'rounded-full' : 'rounded-md'}`}
+        >
+            {text}
+        </button>
     );
 }

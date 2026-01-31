@@ -1,139 +1,82 @@
-@import "tailwindcss";
-@plugin "daisyui";
+@import 'tailwindcss';
+@plugin 'daisyui';
 
-/* ============================================
-   PRESCRIPTO - MEDICAL APPOINTMENT PLATFORM
-   Professional Dark & Light Themes
-   ============================================ */
-
-/*
-  LIGHT THEME - Professional Medical Trust
-  - Clean, crisp whites with subtle warm undertones for comfort
-  - Primary blue (#5F6FFF) for trust and reliability
-  - Soft accent colors that reduce anxiety
-  - High contrast for accessibility
-*/
 @plugin "daisyui/theme" {
-  name: "prescripto-light";
+  name: "light";
   default: true;
   prefersdark: false;
   color-scheme: "light";
 
-  /* Base Colors - Warm whites for welcoming feel */
-  --color-base-100: oklch(99% 0.002 264);           /* Pure white with hint of warmth */
-  --color-base-200: oklch(97% 0.003 264);           /* Soft off-white */
-  --color-base-300: oklch(94% 0.005 264);           /* Light gray with warmth */
-  --color-base-content: oklch(30% 0.02 264);        /* Professional dark gray for text (not black) */
+  --color-base-100: oklch(99% 0.005 85);
+  --color-base-200: oklch(96% 0.008 80);
+  --color-base-300: oklch(91% 0.012 78);
+  --color-base-content: oklch(24% 0.02 260);
 
-  /* Primary - Trust Blue (#5F6FFF converted to OKLCH) */
-  --color-primary: oklch(58% 0.195 264);            /* Professional medical blue */
-  --color-primary-content: oklch(98% 0.01 264);     /* White text on primary */
+  --color-primary: oklch(58% 0.195 264);
+  --color-primary-content: oklch(97% 0.045 264);
 
-  /* Secondary - Calming Teal (reduces anxiety) */
-  --color-secondary: oklch(65% 0.11 195);           /* Soft teal for secondary actions */
-  --color-secondary-content: oklch(98% 0.01 195);   /* White text on secondary */
+  --color-secondary: oklch(72% 0.09 248);
+  --color-secondary-content: oklch(18% 0.08 248);
 
-  /* Accent - Gentle Purple (healthcare wellness) */
-  --color-accent: oklch(70% 0.14 290);              /* Soft purple for highlights */
-  --color-accent-content: oklch(98% 0.01 290);      /* White text on accent */
+  --color-accent: oklch(68% 0.13 192);
+  --color-accent-content: oklch(18% 0.07 192);
 
-  /* Neutral - Professional Gray */
-  --color-neutral: oklch(40% 0.015 264);            /* Medium gray (not too dark) */
-  --color-neutral-content: oklch(97% 0.005 264);    /* Light text on neutral */
+  --color-neutral: oklch(38% 0.03 248);
+  --color-neutral-content: oklch(95% 0.02 248);
 
-  /* Info - Clinical Blue */
-  --color-info: oklch(62% 0.14 240);                /* Information blue */
-  --color-info-content: oklch(98% 0.01 240);        /* White text on info */
+  --color-info: oklch(70% 0.14 220);
+  --color-info-content: oklch(16% 0.07 224);
 
-  /* Success - Health Green */
-  --color-success: oklch(68% 0.16 155);             /* Positive health green */
-  --color-success-content: oklch(98% 0.01 155);     /* White text on success */
+  --color-success: oklch(62% 0.17 156);
+  --color-success-content: oklch(16% 0.07 156);
 
-  /* Warning - Attention Amber */
-  --color-warning: oklch(75% 0.15 75);              /* Warm warning color */
-  --color-warning-content: oklch(30% 0.03 75);      /* Dark text on warning (not black) */
+  --color-warning: oklch(75% 0.14 72);
+  --color-warning-content: oklch(22% 0.08 55);
 
-  /* Error - Medical Alert Red */
-  --color-error: oklch(60% 0.19 25);                /* Alert red, not too aggressive */
-  --color-error-content: oklch(98% 0.01 25);        /* White text on error */
-
-  /* Border Radius - Modern & Friendly */
-  --radius-selector: 0.75rem;                       /* Rounded but professional */
-  --radius-field: 0.625rem;                         /* Input fields */
-  --radius-box: 1rem;                               /* Cards and containers */
-
-  /* Sizing */
-  --size-selector: 0.25rem;                         /* Selector indicators */
-  --size-field: 0.1875rem;                          /* Field borders */
-
-  /* Effects */
-  --border: 1px;                                    /* Standard border */
-  --depth: 2;                                       /* Subtle shadow depth */
-  --noise: 0;                                       /* No noise texture */
+  --color-error: oklch(62% 0.18 24);
+  --color-error-content: oklch(16% 0.08 24);
+  
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
 }
 
-/*
-  DARK THEME - Professional Medical Trust (Dark Mode)
-  - Soft slate background (not pure black) for eye comfort
-  - Maintains primary blue for consistency and trust
-  - Reduced saturation for comfortable night viewing
-  - Ensures WCAG AAA contrast where possible
-*/
 @plugin "daisyui/theme" {
-  name: "prescripto-dark";
+  name: "dark";
   default: false;
   prefersdark: true;
   color-scheme: "dark";
 
-  /* Base Colors - Soft slate, never pure black */
-  --color-base-100: oklch(25% 0.015 264);           /* Lighter slate background (not too dark) */
-  --color-base-200: oklch(22% 0.015 264);           /* Medium slate for cards/containers */
-  --color-base-300: oklch(19% 0.015 264);           /* Darker slate for depth */
-  --color-base-content: oklch(94% 0.008 264);       /* Brighter white for excellent readability */
+  --color-base-100: oklch(22% 0.02 248);
+  --color-base-200: oklch(27% 0.022 250);
+  --color-base-300: oklch(33% 0.025 252);
+  --color-base-content: oklch(92% 0.015 260);
 
-  /* Primary - Trust Blue (same hue as light, adjusted luminance) */
-  --color-primary: oklch(62% 0.19 264);             /* Slightly brighter for dark bg */
-  --color-primary-content: oklch(98% 0.01 264);     /* White text on primary */
+  --color-primary: oklch(64% 0.195 264);
+  --color-primary-content: oklch(97% 0.045 264);
 
-  /* Secondary - Muted Teal */
-  --color-secondary: oklch(60% 0.10 195);           /* Softer teal for dark mode */
-  --color-secondary-content: oklch(98% 0.01 195);   /* White text on secondary */
+  --color-secondary: oklch(55% 0.08 248);
+  --color-secondary-content: oklch(95% 0.04 248);
 
-  /* Accent - Gentle Purple */
-  --color-accent: oklch(68% 0.13 290);              /* Soft purple, lower saturation */
-  --color-accent-content: oklch(98% 0.01 290);      /* White text on accent */
+  --color-accent: oklch(58% 0.12 192);
+  --color-accent-content: oklch(95% 0.04 192);
 
-  /* Neutral - Balanced Gray */
-  --color-neutral: oklch(65% 0.012 264);            /* Light gray for neutral */
-  --color-neutral-content: oklch(20% 0.015 264);    /* Dark text on neutral */
+  --color-neutral: oklch(60% 0.025 248);
+  --color-neutral-content: oklch(16% 0.02 248);
 
-  /* Info - Soft Clinical Blue */
-  --color-info: oklch(65% 0.13 240);                /* Gentle info blue */
-  --color-info-content: oklch(98% 0.01 240);        /* White text on info */
+  --color-info: oklch(60% 0.13 220);
+  --color-info-content: oklch(95% 0.04 224);
 
-  /* Success - Health Green */
-  --color-success: oklch(70% 0.15 155);             /* Positive green, eye-friendly */
-  --color-success-content: oklch(98% 0.01 155);     /* White text on success */
+  --color-success: oklch(56% 0.15 156);
+  --color-success-content: oklch(95% 0.04 156);
 
-  /* Warning - Warm Amber */
-  --color-warning: oklch(78% 0.14 75);              /* Softer warning for dark mode */
-  --color-warning-content: oklch(25% 0.02 75);      /* Dark text on warning */
+  --color-warning: oklch(65% 0.12 72);
+  --color-warning-content: oklch(95% 0.04 55);
 
-  /* Error - Medical Alert Red */
-  --color-error: oklch(65% 0.18 25);                /* Alert red, balanced for dark */
-  --color-error-content: oklch(98% 0.01 25);        /* White text on error */
+  --color-error: oklch(56% 0.16 24);
+  --color-error-content: oklch(95% 0.04 24);
 
-  /* Border Radius - Consistent with light theme */
-  --radius-selector: 0.75rem;
-  --radius-field: 0.625rem;
-  --radius-box: 1rem;
-
-  /* Sizing */
-  --size-selector: 0.25rem;
-  --size-field: 0.1875rem;
-
-  /* Effects */
   --border: 1px;
-  --depth: 3;                                       /* Slightly more depth in dark mode */
+  --depth: 1;
   --noise: 0;
 }

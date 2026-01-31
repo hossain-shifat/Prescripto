@@ -31,7 +31,7 @@ export const NavLinks = () => {
     )
 }
 
-export const MobileNavLinks = ({ onItemClick }) => {
+export const MobileNavLinks = ({ setChecked }) => {
     const pathname = usePathname();
 
     return (
@@ -48,7 +48,7 @@ export const MobileNavLinks = ({ onItemClick }) => {
                                     ? 'bg-primary text-primary-content'
                                     : 'hover:bg-base-300'
                                     }`}
-                                onClick={onItemClick}
+                                onClick={() => setChecked(false)}
                             >
                                 {navLink.label}
                             </Link>

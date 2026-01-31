@@ -16,14 +16,14 @@ export default function Sidebar() {
             </div>
             <div className="drawer-side">
                 <label htmlFor="my-drawer-5" aria-label="close sidebar" className="drawer-overlay"></label>
-                <div className="menu min-h-full bg-base-200  w-80 p-4">
+                <div className="menu min-h-full bg-base-200 w-80 p-4">
                     <div className="flex flex-col">
                         <div className="border-b-2 border-base-300 py-2.5 flex justify-between items-center">
                             <Logo />
                             <button className="drawer-close text-primary" onClick={() => setChecked(false)}><X /></button>
                         </div>
                         <div>
-                            <MobileNavLinks />
+                            <MobileNavLinks setChecked={setChecked}/>
                         </div>
                     </div>
                 </div>

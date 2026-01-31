@@ -3,6 +3,7 @@ import Logo from "./Logo";
 import Sidebar from "./Sidebar";
 import ToggleTheme from "../global/ToggleTheme";
 import { NavLinks } from "./Links";
+import Button from "../global/Button";
 
 
 export default function Navbar() {
@@ -17,8 +18,9 @@ export default function Navbar() {
             <div className="navbar-center hidden lg:flex">
                 <NavLinks />
             </div>
-            <div className="navbar-end">
+            <div className="navbar-end gap-3">
                 <ToggleTheme />
+                <Button text='Create account' smd={false} rounded={true}/>
             </div>
         </div>
     )

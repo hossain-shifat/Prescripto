@@ -1,26 +1,140 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================
+   PRESCRIPTO - MEDICAL APPOINTMENT PLATFORM
+   Professional Dark & Light Themes
+   ============================================ */
+
+/*
+  LIGHT THEME - Professional Medical Trust
+  - Clean, crisp whites with subtle warm undertones for comfort
+  - Primary blue (#5F6FFF) for trust and reliability
+  - Soft accent colors that reduce anxiety
+  - High contrast for accessibility
+*/
+@plugin "daisyui/theme" {
+  name: "prescripto-light";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+
+  /* Base Colors - Warm whites for welcoming feel */
+  --color-base-100: oklch(99% 0.002 264);           /* Pure white with hint of warmth */
+  --color-base-200: oklch(97% 0.003 264);           /* Soft off-white */
+  --color-base-300: oklch(94% 0.005 264);           /* Light gray with warmth */
+  --color-base-content: oklch(30% 0.02 264);        /* Professional dark gray for text (not black) */
+
+  /* Primary - Trust Blue (#5F6FFF converted to OKLCH) */
+  --color-primary: oklch(58% 0.195 264);            /* Professional medical blue */
+  --color-primary-content: oklch(98% 0.01 264);     /* White text on primary */
+
+  /* Secondary - Calming Teal (reduces anxiety) */
+  --color-secondary: oklch(65% 0.11 195);           /* Soft teal for secondary actions */
+  --color-secondary-content: oklch(98% 0.01 195);   /* White text on secondary */
+
+  /* Accent - Gentle Purple (healthcare wellness) */
+  --color-accent: oklch(70% 0.14 290);              /* Soft purple for highlights */
+  --color-accent-content: oklch(98% 0.01 290);      /* White text on accent */
+
+  /* Neutral - Professional Gray */
+  --color-neutral: oklch(40% 0.015 264);            /* Medium gray (not too dark) */
+  --color-neutral-content: oklch(97% 0.005 264);    /* Light text on neutral */
+
+  /* Info - Clinical Blue */
+  --color-info: oklch(62% 0.14 240);                /* Information blue */
+  --color-info-content: oklch(98% 0.01 240);        /* White text on info */
+
+  /* Success - Health Green */
+  --color-success: oklch(68% 0.16 155);             /* Positive health green */
+  --color-success-content: oklch(98% 0.01 155);     /* White text on success */
+
+  /* Warning - Attention Amber */
+  --color-warning: oklch(75% 0.15 75);              /* Warm warning color */
+  --color-warning-content: oklch(30% 0.03 75);      /* Dark text on warning (not black) */
+
+  /* Error - Medical Alert Red */
+  --color-error: oklch(60% 0.19 25);                /* Alert red, not too aggressive */
+  --color-error-content: oklch(98% 0.01 25);        /* White text on error */
+
+  /* Border Radius - Modern & Friendly */
+  --radius-selector: 0.75rem;                       /* Rounded but professional */
+  --radius-field: 0.625rem;                         /* Input fields */
+  --radius-box: 1rem;                               /* Cards and containers */
+
+  /* Sizing */
+  --size-selector: 0.25rem;                         /* Selector indicators */
+  --size-field: 0.1875rem;                          /* Field borders */
+
+  /* Effects */
+  --border: 1px;                                    /* Standard border */
+  --depth: 2;                                       /* Subtle shadow depth */
+  --noise: 0;                                       /* No noise texture */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/*
+  DARK THEME - Professional Medical Trust (Dark Mode)
+  - Soft slate background (not pure black) for eye comfort
+  - Maintains primary blue for consistency and trust
+  - Reduced saturation for comfortable night viewing
+  - Ensures WCAG AAA contrast where possible
+*/
+@plugin "daisyui/theme" {
+  name: "prescripto-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: "dark";
+
+  /* Base Colors - Soft slate, never pure black */
+  --color-base-100: oklch(20% 0.015 264);           /* Soft dark slate (professional, not harsh) */
+  --color-base-200: oklch(17% 0.015 264);           /* Slightly darker slate */
+  --color-base-300: oklch(14% 0.015 264);           /* Darkest background shade */
+  --color-base-content: oklch(92% 0.01 264);        /* Soft white for text */
+
+  /* Primary - Trust Blue (same hue as light, adjusted luminance) */
+  --color-primary: oklch(62% 0.19 264);             /* Slightly brighter for dark bg */
+  --color-primary-content: oklch(98% 0.01 264);     /* White text on primary */
+
+  /* Secondary - Muted Teal */
+  --color-secondary: oklch(60% 0.10 195);           /* Softer teal for dark mode */
+  --color-secondary-content: oklch(98% 0.01 195);   /* White text on secondary */
+
+  /* Accent - Gentle Purple */
+  --color-accent: oklch(68% 0.13 290);              /* Soft purple, lower saturation */
+  --color-accent-content: oklch(98% 0.01 290);      /* White text on accent */
+
+  /* Neutral - Balanced Gray */
+  --color-neutral: oklch(65% 0.012 264);            /* Light gray for neutral */
+  --color-neutral-content: oklch(20% 0.015 264);    /* Dark text on neutral */
+
+  /* Info - Soft Clinical Blue */
+  --color-info: oklch(65% 0.13 240);                /* Gentle info blue */
+  --color-info-content: oklch(98% 0.01 240);        /* White text on info */
+
+  /* Success - Health Green */
+  --color-success: oklch(70% 0.15 155);             /* Positive green, eye-friendly */
+  --color-success-content: oklch(98% 0.01 155);     /* White text on success */
+
+  /* Warning - Warm Amber */
+  --color-warning: oklch(78% 0.14 75);              /* Softer warning for dark mode */
+  --color-warning-content: oklch(25% 0.02 75);      /* Dark text on warning */
+
+  /* Error - Medical Alert Red */
+  --color-error: oklch(65% 0.18 25);                /* Alert red, balanced for dark */
+  --color-error-content: oklch(98% 0.01 25);        /* White text on error */
+
+  /* Border Radius - Consistent with light theme */
+  --radius-selector: 0.75rem;
+  --radius-field: 0.625rem;
+  --radius-box: 1rem;
+
+  /* Sizing */
+  --size-selector: 0.25rem;
+  --size-field: 0.1875rem;
+
+  /* Effects */
+  --border: 1px;
+  --depth: 3;                                       /* Slightly more depth in dark mode */
+  --noise: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}

@@ -23,7 +23,7 @@ export default function Card({ datas = [], limit, step = 10, sm = 1, md = 3, lg 
         : datas
 
     return (
-        <>
+        <section>
             <div className={`grid gap-4 grid-cols-${sm} md:grid-cols-${md} lg:grid-cols-${lg} mx-4 md:mx-0`}>
                 {
                     visibleData.map(data => (
@@ -67,6 +67,6 @@ export default function Card({ datas = [], limit, step = 10, sm = 1, md = 3, lg 
                     )}
                 </div>
             )}
-        </>
+        </section>
     );
 };

@@ -84,8 +84,8 @@ export function SpecialitySidebar({ onCategoryClick, selectedCategory }) {
                     <button
                         key={idx}
                         onClick={() => handleCategorySelect(data.speciality)}
-                        className={`w-full font-medium border border-base-200 cursor-pointer py-3 px-4 rounded-lg text-left transition-all duration-300 ${selectedCategory === data.speciality
-                            ? 'bg-[#E2E5FF] text-base-content'
+                        className={`w-full font-medium border border-base-200 cursor-pointer py-3 px-4 rounded-md text-left transition-all duration-300 ${selectedCategory === data.speciality
+                            ? 'bg-[#E2E5FF]/12 text-base-content'
                                 : 'hover:bg-primary/10'
                             }`}
                     >

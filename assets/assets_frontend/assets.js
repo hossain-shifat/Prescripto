@@ -98,7 +98,8 @@ export const doctors = [
         address: {
             line1: '17th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        status: 'Available'
     },
     {
         _id: 'doc2',
@@ -112,7 +113,8 @@ export const doctors = [
         address: {
             line1: '27th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        status: 'Available'
     },
     {
         _id: 'doc3',
@@ -126,7 +128,8 @@ export const doctors = [
         address: {
             line1: '37th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        status: 'Not Available'
     },
     {
         _id: 'doc4',
@@ -140,7 +143,8 @@ export const doctors = [
         address: {
             line1: '47th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        status: 'Available'
     },
     {
         _id: 'doc5',
@@ -154,7 +158,8 @@ export const doctors = [
         address: {
             line1: '57th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        status: 'Available'
     },
     {
         _id: 'doc6',
@@ -168,7 +173,8 @@ export const doctors = [
         address: {
             line1: '57th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        status: 'Not Available'
     },
     {
         _id: 'doc7',
@@ -182,7 +188,8 @@ export const doctors = [
         address: {
             line1: '17th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        status: 'Available'
     },
     {
         _id: 'doc8',
@@ -196,7 +203,8 @@ export const doctors = [
         address: {
             line1: '27th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        status: 'Available'
     },
     {
         _id: 'doc9',
@@ -210,7 +218,8 @@ export const doctors = [
         address: {
             line1: '37th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        status: 'Not Available'
     },
     {
         _id: 'doc10',
@@ -224,7 +233,8 @@ export const doctors = [
         address: {
             line1: '47th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        status: 'Available'
     },
     {
         _id: 'doc11',
@@ -238,7 +248,8 @@ export const doctors = [
         address: {
             line1: '57th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        status: 'Available'
     },
     {
         _id: 'doc12',
@@ -252,7 +263,8 @@ export const doctors = [
         address: {
             line1: '57th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        status: 'Not Available'
     },
     {
         _id: 'doc13',
@@ -266,7 +278,8 @@ export const doctors = [
         address: {
             line1: '17th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        status: 'Available'
     },
     {
         _id: 'doc14',
@@ -280,7 +293,8 @@ export const doctors = [
         address: {
             line1: '27th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        status: 'Available'
     },
     {
         _id: 'doc15',
@@ -294,6 +308,7 @@ export const doctors = [
         address: {
             line1: '37th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        status: 'Not Available'
     },
 ]

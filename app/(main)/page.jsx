@@ -1,4 +1,5 @@
-import { assets, specialityData } from "@/assets/assets_frontend/assets"
+import { assets, doctors, specialityData } from "@/assets/assets_frontend/assets"
+import Card from "@/components/global/Card"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
 
@@ -8,7 +9,7 @@ const Home = () => {
             {/* banner */}
             <div className="relative flex flex-col lg:flex-row justify-between items-center bg-primary rounded-md px-5 md:px-10 overflow-hidden">
                 {/* Left Content */}
-                <div className="py-10 md:py-30 space-y-5">
+                <div className="py-10 md:py-28 space-y-5">
                     {/* Heading */}
                     <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl lg:leading-20 text-white">
                         Book Appointment<br />With Trusted Doctors
@@ -56,11 +57,20 @@ const Home = () => {
                     {
                         specialityData.map((data, idx) => (
                             <div key={idx} className="space-y-5">
-                                <Image src={data.image} alt="Specialist image" className="hover:scale-110 duration-300"/>
-                                <p>{data.speciality}</p>
+                                <Image src={data.image} alt="Specialist image" className="hover:scale-110 duration-300" />
+                                <p className="text-center">{data.speciality}</p>
                             </div>
                         ))
                     }
+                </div>
+            </div>
+            <div className="space-y-20">
+                <div className="text-center space-y-5">
+                    <h1 className="font-bold text-4xl">Top Doctors to Book</h1>
+                    <p>Simply browse through our extensive list of trusted doctors.</p>
+                </div>
+                <div>
+                    <Card datas={doctors} sm={1} md={3} lg={5} limit={10} />
                 </div>
             </div>
         </section>

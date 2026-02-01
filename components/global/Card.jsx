@@ -3,8 +3,11 @@ import { Dot } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import CardSkeleton from "./CardSkeleton";
+import { useRouter } from "next/navigation";
 
 export default function Card({ datas = [], limit, step = 10, sm = 1, md = 3, lg = 4, isLoading = false }) {
+
+    const router = useRouter();
 
     const isLimited = typeof limit === 'number'
     const [visible, setVisible] = useState(
@@ -62,7 +65,7 @@ export default function Card({ datas = [], limit, step = 10, sm = 1, md = 3, lg 
             <div className={gridClasses}>
                 {
                     visibleData.map(data => (
-                        <div key={data._id} className="bg-base-100 rounded-2xl overflow-hidden border border-base-200 hover:-translate-y-1 transition duration-300 cursor-pointer">
+                        <div onClick={() => router.push(`/doctors/${data._id}`)} key={data._id} className="bg-base-100 rounded-2xl overflow-hidden border border-base-200 hover:-translate-y-1 transition duration-300 cursor-pointer">
                             <div className="bg-[#C9D8FF]">
                                 <Image className="w-full h-52 object-cover object-top" src={data.image} alt={data.name} />
                             </div>

@@ -1,7 +1,7 @@
 export default function Button({ text, style = '', smd = false, rounded = false }) {
     return (
         <button
-            className={`btn btn-primary ${style} ${smd ? '' : 'hidden md:block'} ${rounded ? 'rounded-full' : 'rounded-md'}`}
+            className={`btn bg-[#5F6FFF] text-base-content ${style} ${smd ? '' : 'hidden md:block'} ${rounded ? 'rounded-full' : 'rounded-md'}`}
         >
             {text}
         </button>

@@ -13,7 +13,7 @@ export default function MainLayout({ children }) {
         <section className={poppins.className}>
             <div>
                 <Navbar />
-                <main className="min-h-screen bg-base-100 p-2 py-20 md:mx-25 overflow-hidden">
+                <main className="min-h-screen bg-base-100 p-2 py-20 md:mx-30 overflow-hidden">
                     {children}
                 </main>
                 <Footer />

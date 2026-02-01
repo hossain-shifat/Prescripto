@@ -27,11 +27,11 @@ export default function Card({ datas = [], limit, step = 10, sm = 1, md = 3, lg 
             <div className={`grid gap-4 grid-cols-${sm} md:grid-cols-${md} lg:grid-cols-${lg} mx-4 md:mx-0`}>
                 {
                     visibleData.map(data => (
-                        <div key={data._id} className="bg-base-100 rounded-2xl pb-4 overflow-hidden border border-base-200 hover:-translate-y-1 transition duration-300">
+                        <div key={data._id} className="bg-base-100 rounded-2xl overflow-hidden border border-base-200 hover:-translate-y-1 transition duration-300">
                             <div className="bg-[#C9D8FF]">
                                 <Image className="w-full h-52 object-cover object-top" src={data.image} alt='' />
                             </div>
-                            <div className="flex flex-col p-4 gap-2">
+                            <div className="flex flex-col py-4 gap-2">
                                 <p className={`font-medium flex items-center gap-0 ${data.status === 'Available' ? 'text-green-500' : 'text-red-500'}`}>
                                     <Dot className="-mr-3.5" size={50} />
                                     {data.status}

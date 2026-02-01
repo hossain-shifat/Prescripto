@@ -73,6 +73,33 @@ const Home = () => {
                     <Card datas={doctors} sm={1} md={3} lg={5} limit={10} />
                 </div>
             </div>
+            {/* footer banner */}
+            <div className="relative flex flex-row justify-between items-center bg-primary rounded-md px-10 md:pl-20 overflow-hidden">
+                {/* Left Content */}
+                <div className="py-8 sm:py-10 lg:py-16 space-y-3 sm:space-y-5 z-20 w-1/2 lg:w-1/2">
+                    {/* Heading */}
+                    <h1 className="font-bold text-sm sm:text-2xl md:text-4xl lg:text-5xl leading-tight lg:leading-tight text-white">
+                        Book Appointment
+                        <br /> With 100+ Trusted Doctors
+                    </h1>
+                    {/* CTA Button */}
+                    <button className="group btn btn-xs sm:btn-md lg:btn-lg bg-white text-primary hover:bg-white border-none shadow-xl rounded-full transition-all duration-300 hover:shadow-2xl hover:scale-105 active:scale-95">
+                        <span className="hidden sm:inline">Create account</span>
+                        <span className="inline sm:hidden">Create</span>
+                        <ArrowRight className="w-3 h-3 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </button>
+                </div>
+
+                {/* Right Image - Doctor */}
+                <div className="absolute right-0 bottom-0 w-1/2 h-full flex items-end justify-end pr-10 md:pr-20">
+                    <Image
+                        src={assets.appointment_img}
+                        alt="Professional doctor"
+                        className="h-full w-auto object-contain object-bottom"
+                        priority
+                    />
+                </div>
+            </div>
         </section>
     )
 }

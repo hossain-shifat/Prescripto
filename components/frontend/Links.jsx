@@ -45,9 +45,9 @@ export const MobileNavLinks = ({ setChecked }) => {
                         <li key={navLink.id} className="w-full">
                             <Link
                                 href={navLink.href}
-                                className={`w-full ${isActive
-                                    ? 'bg-primary text-primary-content'
-                                    : 'hover:bg-base-300'
+                                className={`w-full font-medium ${isActive
+                                    ? 'bg-primary text-white'
+                                    : 'hover:bg-primary/10'
                                     }`}
                                 onClick={() => setChecked(false)}
                             >

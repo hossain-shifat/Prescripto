@@ -46,10 +46,10 @@ export default function AllDoctorsPage() {
                 </div>
 
                 {/* Right Content - Takes remaining columns */}
-                <div className="md:col-span-3 lg:col-span-4">
+                <div className="md:col-span-3 lg:col-span-4 ">
                     <Card
                         datas={filteredDoctors}
-                        sm={1}
+                        sm={2}
                         md={3}
                         lg={4}
                     />

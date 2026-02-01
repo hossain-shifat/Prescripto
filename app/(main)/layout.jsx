@@ -11,11 +11,13 @@ const poppins = Poppins({
 export default function MainLayout({ children }) {
     return (
         <section className={poppins.className}>
-            <Navbar />
-            <main className="min-h-screen bg-base-100 py-20 overflow-hidden">
-                {children}
-            </main>
-            <Footer />
+            <div>
+                <Navbar />
+                <main className="min-h-screen bg-base-100 py-20 md:mx-30 overflow-hidden">
+                    {children}
+                </main>
+                <Footer />
+            </div>
         </section>
     );
 }

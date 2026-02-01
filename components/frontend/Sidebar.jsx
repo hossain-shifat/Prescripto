@@ -46,7 +46,7 @@ export default function Sidebar() {
                                     <p className="text-sm truncate">hossainshifat222@gmail.com</p>
                                 </div>
                             </div>
-                            <button className="btn btn-ghost text-error hover:bg-error/10 shrink-0">
+                            <button className="btn btn-ghost text-error hover:bg-transparent bg-transparent border-none shadow-none shrink-0">
                                 <LogOut size={25} />
                             </button>
                         </div>

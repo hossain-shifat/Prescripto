@@ -1,11 +1,10 @@
-import { assets } from "@/assets/assets_frontend/assets"
-import Button from "@/components/global/Button"
+import { assets, specialityData } from "@/assets/assets_frontend/assets"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
 
 const Home = () => {
     return (
-        <section>
+        <section className="space-y-20">
             {/* banner */}
             <div className="relative flex flex-col lg:flex-row justify-between items-center bg-primary rounded-md px-5 md:px-10 overflow-hidden">
                 {/* Left Content */}
@@ -45,6 +44,23 @@ const Home = () => {
                         className="w-full max-w-sm md:max-w-md lg:max-w-md xl:max-w-lg object-contain lg:object-cover lg:h-full"
                         priority
                     />
+                </div>
+            </div>
+            {/* Specialist section */}
+            <div className="space-y-20">
+                <div className="text-center space-y-10">
+                    <h1 className="font-bold text-4xl">Find by Speciality</h1>
+                    <p>Simply browse through our extensive list of trusted doctors, schedule <br /> your appointment hassle-free.</p>
+                </div>
+                <div className="flex flex-col md:flex-row justify-center items-center gap-10">
+                    {
+                        specialityData.map((data, idx) => (
+                            <div key={idx} className="space-y-5">
+                                <Image src={data.image} alt="Specialist image" className="hover:scale-110 duration-300"/>
+                                <p>{data.speciality}</p>
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
         </section>

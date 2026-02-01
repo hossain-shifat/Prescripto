@@ -7,7 +7,7 @@ export const navLinks = [
     {
         id: 2,
         label: "All Doctors",
-        href: "/all-doctors",
+        href: "/doctors",
     },
     {
         id: 3,

@@ -1,4 +1,5 @@
 import { assets, doctors, specialityData } from "@/assets/assets_frontend/assets"
+import { Speciality } from "@/components/frontend/Speciality"
 import Card from "@/components/global/Card"
 import { ArrowRight } from "lucide-react"
 import Image from "next/image"
@@ -54,14 +55,7 @@ const Home = () => {
                     <p>Simply browse through our extensive list of trusted doctors, schedule <br /> your appointment hassle-free.</p>
                 </div>
                 <div className="flex flex-col md:flex-row justify-center items-center gap-10">
-                    {
-                        specialityData.map((data, idx) => (
-                            <div key={idx} className="space-y-5">
-                                <Image src={data.image} alt="Specialist image" className="hover:scale-110 duration-300" />
-                                <p className="text-center">{data.speciality}</p>
-                            </div>
-                        ))
-                    }
+                    <Speciality />
                 </div>
             </div>
             <div className="space-y-20">

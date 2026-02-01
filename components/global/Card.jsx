@@ -36,7 +36,7 @@ export default function Card({ datas = [], limit, step = 10, sm = 1, md = 3, lg 
                                     <Dot className="-mr-3.5" size={50} />
                                     {data.status}
                                 </p>
-                                <div className="px-2 sm:px-3 md:px-4">
+                                <div className="px-4">
                                     <p className="text-base-content  font-semibold text-xl md:text-base lg:text-lg leading-tight">{data.name}</p>
                                     <p className="text-base-content text-xs sm:text-sm mt-1">{data.speciality}</p>
                                 </div>

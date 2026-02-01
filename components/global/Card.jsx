@@ -2,8 +2,9 @@
 import { Dot } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import CardSkeleton from "./CardSkeleton";
 
-export default function Card({ datas = [], limit, step = 10, sm = 1, md = 3, lg = 4 }) {
+export default function Card({ datas = [], limit, step = 10, sm = 1, md = 3, lg = 4, isLoading = false }) {
 
     const isLimited = typeof limit === 'number'
     const [visible, setVisible] = useState(
@@ -51,6 +52,10 @@ export default function Card({ datas = [], limit, step = 10, sm = 1, md = 3, lg 
     }
 
     const gridClasses = `grid gap-4 ${gridColsMap.sm[sm]} ${gridColsMap.md[md]} ${gridColsMap.lg[lg]} mx-5 md:mx-0`;
+
+    if (isLoading) {
+        return <CardSkeleton sm={sm} md={md} lg={lg} count={limit || 8} />;
+    }
 
     return (
         <>

@@ -10,7 +10,7 @@ export function Speciality() {
     const router = useRouter();
 
     const handleClick = (speciality) => {
-        router.push(`/all-doctors?speciality=${encodeURIComponent(speciality)}`);
+        router.push(`/doctors?speciality=${encodeURIComponent(speciality)}`);
     };
 
     return (

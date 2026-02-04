@@ -257,7 +257,7 @@ export default function RegisterPage() {
                                 href="/login"
                                 className="text-[#667eea] hover:text-[#5568d3] font-semibold hover:underline transition-colors"
                             >
-                                Login Here
+                                Login
                             </a>
                         </p>
                     </div>

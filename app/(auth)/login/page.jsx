@@ -42,7 +42,7 @@ export default function LoginPage() {
                             type="email"
                             id="email"
                             placeholder="Enter your email address"
-                            className={`w-full px-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-[#fafafa] focus:bg-white focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.email ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
+                            className={`w-full px-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.email ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
                                 }`}
                             {...register('email', {
                                 required: 'Please enter your email address',
@@ -69,7 +69,7 @@ export default function LoginPage() {
                                 type={showPassword ? 'text' : 'password'}
                                 id="password"
                                 placeholder="Enter your password"
-                                className={`w-full px-4 py-2.5 pr-12 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-[#fafafa] focus:bg-white focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.password ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
+                                className={`w-full px-4 py-2.5 pr-12 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.password ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
                                     }`}
                                 {...register('password', {
                                     required: 'Please enter your password',
@@ -127,7 +127,7 @@ export default function LoginPage() {
                     {/* Register Link */}
                     <div className="text-center mt-5">
                         <p className="text-sm text-[#6b7280]">
-                            Don't have an account?{' '}
+                            Don&apos;t have an account?{' '}
                             <a
                                 href="/register"
                                 className="text-[#667eea] hover:text-[#5568d3] font-semibold hover:underline transition-colors"

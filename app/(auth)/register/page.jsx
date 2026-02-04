@@ -110,7 +110,7 @@ export default function RegisterPage() {
                             type="text"
                             id="fullName"
                             placeholder="Enter your full name"
-                            className={`w-full px-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-[#fafafa] focus:bg-white focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.fullName ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
+                            className={`w-full px-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.fullName ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
                                 }`}
                             {...register('fullName', {
                                 required: 'Please enter your full name',
@@ -136,7 +136,7 @@ export default function RegisterPage() {
                             type="email"
                             id="email"
                             placeholder="Enter your email address"
-                            className={`w-full px-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-[#fafafa] focus:bg-white focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.email ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
+                            className={`w-full px-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.email ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
                                 }`}
                             {...register('email', {
                                 required: 'Please enter your email address',
@@ -166,7 +166,7 @@ export default function RegisterPage() {
                                 type="tel"
                                 id="phone"
                                 placeholder="1XXX-XXXXXX"
-                                className={`w-full pl-12.5 pr-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-[#fafafa] focus:bg-white focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.phone ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
+                                className={`w-full pl-12.5 pr-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.phone ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
                                     }`}
                                 {...register('phone', {
                                     required: 'Please enter your phone number',
@@ -204,7 +204,7 @@ export default function RegisterPage() {
                                 type={showPassword ? 'text' : 'password'}
                                 id="password"
                                 placeholder="Create a strong password"
-                                className={`w-full px-4 py-2.5 pr-12 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-[#fafafa] focus:bg-white focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.password ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
+                                className={`w-full px-4 py-2.5 pr-12 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.password ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
                                     }`}
                                 {...register('password', {
                                     required: 'Please enter a password',

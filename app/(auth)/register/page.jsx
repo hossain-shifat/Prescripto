@@ -48,10 +48,36 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-5 ">
-            <div className="w-full max-w-110 bg-base-100 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.3)] p-8 animate-slideUp">
+        <div className="min-h-screen flex items-center justify-center p-5">
+            <div className="w-full max-w-110 bg-base-100 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.3)] p-8 animate-slideUp relative overflow-hidden">
+                {/* Corner Decorative Elements */}
+                <div className="corner-decoration corner-top-left"></div>
+                <div className="corner-decoration corner-top-right"></div>
+                <div className="corner-decoration corner-bottom-left"></div>
+                <div className="corner-decoration corner-bottom-right"></div>
+
+                {/* Top Accent Line */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-60"></div>
+
+                {/* Decorative SVG Elements */}
+                <svg className="absolute top-6 right-6 w-16 h-16 opacity-[0.06]" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="oklch(60.92% 0.212 273.52)" strokeWidth="2" />
+                    <circle cx="50" cy="50" r="30" fill="none" stroke="oklch(60.92% 0.212 273.52)" strokeWidth="2" />
+                    <circle cx="50" cy="50" r="20" fill="none" stroke="oklch(60.92% 0.212 273.52)" strokeWidth="2" />
+                </svg>
+
+                <svg className="absolute bottom-6 left-6 w-14 h-14 opacity-[0.06]" viewBox="0 0 100 100">
+                    <path d="M50 10 L90 90 L10 90 Z" fill="none" stroke="oklch(60.92% 0.212 273.52)" strokeWidth="2" />
+                    <path d="M50 25 L75 75 L25 75 Z" fill="none" stroke="oklch(60.92% 0.212 273.52)" strokeWidth="2" />
+                </svg>
+
+                {/* Floating Dots */}
+                <div className="floating-dot" style={{ top: '15%', right: '12%' }}></div>
+                <div className="floating-dot" style={{ top: '75%', right: '8%', animationDelay: '1s' }}></div>
+                <div className="floating-dot" style={{ top: '25%', left: '10%', animationDelay: '2s' }}></div>
+
                 {/* Header */}
-                <div className="text-center mb-6">
+                <div className="text-center mb-6 relative z-10">
                     <h1 className="text-[28px] font-semibold text-base-content mb-2">
                         Create Account
                     </h1>
@@ -61,9 +87,12 @@ export default function RegisterPage() {
                 </div>
 
                 {/* Profile Image Upload */}
-                <div className="flex flex-col items-center mb-6">
+                <div className="flex flex-col items-center mb-6 relative z-10">
                     <div className="relative mb-2">
-                        <div className="w-20 h-20 rounded-full bg-linear-to-br from-[#667eea] to-[#764ba2] flex items-center justify-center overflow-hidden border-[3px] border-[#f3f4f6] shadow-[0_3px_10px_rgba(0,0,0,0.1)]">
+                        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary via-[#764ba2] to-primary flex items-center justify-center overflow-hidden border-[3px] border-base-200 shadow-[0_3px_10px_rgba(0,0,0,0.1)] relative">
+                            {/* Profile ring decoration */}
+                            <div className="profile-ring"></div>
+
                             {imagePreview ? (
                                 <Image
                                     src={imagePreview}
@@ -73,14 +102,14 @@ export default function RegisterPage() {
                                     className="w-full h-full object-cover"
                                 />
                             ) : (
-                                <span className="text-[32px] text-white font-light">
+                                <span className="text-[32px] text-white font-light relative z-10">
                                     {getInitial()}
                                 </span>
                             )}
                         </div>
                         <label
                             htmlFor="profileImage"
-                            className="absolute bottom-0 right-0 w-7 h-7 bg-[#667eea] hover:bg-[#5568d3] rounded-full flex items-center justify-center cursor-pointer shadow-[0_2px_6px_rgba(102,126,234,0.4)] transition-all hover:scale-110"
+                            className="absolute bottom-0 right-0 w-7 h-7 bg-primary hover:bg-[oklch(58% 0.212 273.52)] rounded-full flex items-center justify-center cursor-pointer shadow-[0_2px_6px_rgba(102,126,234,0.4)] transition-all hover:scale-110"
                         >
                             <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-white">
                                 <path d="M12 5v14m7-7H5" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" />
@@ -94,13 +123,13 @@ export default function RegisterPage() {
                             className="hidden"
                         />
                     </div>
-                    <span className="text-xs text-[#667eea] font-medium">
+                    <span className="text-xs text-primary font-medium">
                         Upload Photo
                     </span>
                 </div>
 
                 {/* Form */}
-                <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                <form onSubmit={handleSubmit(onSubmit)} noValidate className="relative z-10">
                     {/* Full Name */}
                     <div className="mb-4">
                         <label htmlFor="fullName" className="block text-sm font-medium text-[#374151] mb-1.5">
@@ -110,7 +139,7 @@ export default function RegisterPage() {
                             type="text"
                             id="fullName"
                             placeholder="Enter your full name"
-                            className={`w-full px-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.fullName ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
+                            className={`w-full px-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.fullName ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
                                 }`}
                             {...register('fullName', {
                                 required: 'Please enter your full name',
@@ -136,7 +165,7 @@ export default function RegisterPage() {
                             type="email"
                             id="email"
                             placeholder="Enter your email address"
-                            className={`w-full px-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.email ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
+                            className={`w-full px-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.email ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
                                 }`}
                             {...register('email', {
                                 required: 'Please enter your email address',
@@ -165,8 +194,8 @@ export default function RegisterPage() {
                             <input
                                 type="tel"
                                 id="phone"
-                                placeholder="1XXX-XXXXXX"
-                                className={`w-full pl-12.5 pr-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.phone ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
+                                placeholder=" 1XXX-XXXXXX"
+                                className={`w-full pl-12.5 pr-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.phone ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
                                     }`}
                                 {...register('phone', {
                                     required: 'Please enter your phone number',
@@ -204,7 +233,7 @@ export default function RegisterPage() {
                                 type={showPassword ? 'text' : 'password'}
                                 id="password"
                                 placeholder="Create a strong password"
-                                className={`w-full px-4 py-2.5 pr-12 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.password ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
+                                className={`w-full px-4 py-2.5 pr-12 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.password ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
                                     }`}
                                 {...register('password', {
                                     required: 'Please enter a password',
@@ -217,7 +246,7 @@ export default function RegisterPage() {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9ca3af] hover:text-[#667eea] transition-colors cursor-pointer"
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9ca3af] hover:text-primary transition-colors cursor-pointer"
                             >
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     {showPassword ? (
@@ -244,9 +273,10 @@ export default function RegisterPage() {
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className="w-full py-3 mt-1 bg-primary text-white border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all shadow-[0_4px_12px_rgba(102,126,234,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] active:translate-y-0"
+                        className="w-full py-3 mt-1 bg-primary text-white border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all shadow-[0_4px_12px_rgba(102,126,234,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] active:translate-y-0 relative overflow-hidden group"
                     >
-                        Create Account
+                        <span className="relative z-10">Create Account</span>
+                        <div className="button-shine"></div>
                     </button>
 
                     {/* Login Link */}
@@ -255,7 +285,7 @@ export default function RegisterPage() {
                             Already have an account?{' '}
                             <a
                                 href="/login"
-                                className="text-[#667eea] hover:text-[#5568d3] font-semibold hover:underline transition-colors"
+                                className="text-primary hover:text-[oklch(58% 0.212 273.52)] font-semibold hover:underline transition-colors"
                             >
                                 Login
                             </a>
@@ -275,8 +305,124 @@ export default function RegisterPage() {
             transform: translateY(0);
           }
         }
+
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+
+        @keyframes rotate {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        @keyframes shine {
+          0% {
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+          }
+          100% {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
+          }
+        }
+
         .animate-slideUp {
           animation: slideUp 0.5s ease-out;
+        }
+
+        /* Corner Decorations */
+        .corner-decoration {
+          position: absolute;
+          width: 40px;
+          height: 40px;
+          opacity: 0.08;
+        }
+
+        .corner-top-left {
+          top: 0;
+          left: 0;
+          border-top: 3px solid oklch(60.92% 0.212 273.52);
+          border-left: 3px solid oklch(60.92% 0.212 273.52);
+          border-top-left-radius: 1rem;
+        }
+
+        .corner-top-right {
+          top: 0;
+          right: 0;
+          border-top: 3px solid oklch(60.92% 0.212 273.52);
+          border-right: 3px solid oklch(60.92% 0.212 273.52);
+          border-top-right-radius: 1rem;
+        }
+
+        .corner-bottom-left {
+          bottom: 0;
+          left: 0;
+          border-bottom: 3px solid oklch(60.92% 0.212 273.52);
+          border-left: 3px solid oklch(60.92% 0.212 273.52);
+          border-bottom-left-radius: 1rem;
+        }
+
+        .corner-bottom-right {
+          bottom: 0;
+          right: 0;
+          border-bottom: 3px solid oklch(60.92% 0.212 273.52);
+          border-right: 3px solid oklch(60.92% 0.212 273.52);
+          border-bottom-right-radius: 1rem;
+        }
+
+        /* Floating Dots */
+        .floating-dot {
+          position: absolute;
+          width: 6px;
+          height: 6px;
+          background: oklch(60.92% 0.212 273.52);
+          border-radius: 50%;
+          opacity: 0.15;
+          animation: float 3s ease-in-out infinite;
+        }
+
+        /* Profile Ring Animation */
+        .profile-ring {
+          position: absolute;
+          top: -3px;
+          left: -3px;
+          right: -3px;
+          bottom: -3px;
+          border: 2px solid oklch(60.92% 0.212 273.52);
+          border-radius: 50%;
+          opacity: 0.3;
+          animation: rotate 8s linear infinite;
+          border-top-color: transparent;
+          border-right-color: transparent;
+        }
+
+        /* Button Shine Effect */
+        .button-shine {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(
+            45deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.3) 50%,
+            transparent 70%
+          );
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+
+        button:hover .button-shine {
+          animation: shine 1.5s ease-in-out infinite;
+          opacity: 1;
         }
       `}</style>
         </div>

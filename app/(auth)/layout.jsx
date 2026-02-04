@@ -1,3 +1,5 @@
+import '../globals.css'
+
 export default function AuthLayout({ children }) {
     return (
         <div className="min-h-screen relative overflow-hidden bg-base-100">

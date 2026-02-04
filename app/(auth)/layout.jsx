@@ -1,6 +1,6 @@
 export default function AuthLayout({ children }) {
     return (
-        <section>
+        <section className="bg-base-200">
             {children}
         </section>
     );

@@ -81,11 +81,360 @@
   --noise: 0;
 }
 
-/* Custom animations for the registration page */
-@keyframes slideUp {
+/* Add these new animations to your existing globals.css file */
+
+/* ======================================
+   ENHANCED Medical Auth Layout Animations
+   ====================================== */
+
+/* Fifth Orb Animation */
+.medical-orb-5 {
+  animation: orb-float-5 16s ease-in-out infinite;
+}
+
+@keyframes orb-float-5 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-15px, 20px) scale(1.05);
+  }
+  50% {
+    transform: translate(20px, -15px) scale(0.98);
+  }
+  75% {
+    transform: translate(-10px, -10px) scale(1.08);
+  }
+}
+
+/* Additional Cross Animations */
+.float-cross-5 {
+  animation: cross-float-5 11s ease-in-out infinite;
+}
+
+.float-cross-6 {
+  animation: cross-float-6 9.5s ease-in-out infinite;
+}
+
+@keyframes cross-float-5 {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translateY(-28px) rotate(8deg);
+    opacity: 0.25;
+  }
+}
+
+@keyframes cross-float-6 {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.13;
+  }
+  50% {
+    transform: translateY(-32px) rotate(-6deg);
+    opacity: 0.23;
+  }
+}
+
+/* Third DNA Strand Animation */
+.dna-float-3 {
+  animation: dna-spiral-3 16s linear infinite;
+}
+
+@keyframes dna-spiral-3 {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 0.6;
+  }
+  33% {
+    transform: translateY(-25px) rotate(120deg) scale(1.05);
+    opacity: 0.8;
+  }
+  66% {
+    transform: translateY(15px) rotate(240deg) scale(0.95);
+    opacity: 0.7;
+  }
+}
+
+/* Third Pill Animation */
+.pill-float-3 {
+  animation: pill-drift-3 13s ease-in-out infinite;
+}
+
+@keyframes pill-drift-3 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.5;
+  }
+  40% {
+    transform: translate(-25px, 20px) rotate(-12deg);
+    opacity: 0.75;
+  }
+  80% {
+    transform: translate(15px, -15px) rotate(8deg);
+    opacity: 0.65;
+  }
+}
+
+/* Heart Icon Animations */
+.heart-float-1 {
+  animation: heart-beat-1 3s ease-in-out infinite;
+}
+
+.heart-float-2 {
+  animation: heart-beat-2 3.5s ease-in-out infinite;
+}
+
+.heart-float-3 {
+  animation: heart-beat-3 3.2s ease-in-out infinite;
+}
+
+@keyframes heart-beat-1 {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  10% {
+    transform: scale(1.15);
+    opacity: 0.7;
+  }
+  20% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  30% {
+    transform: scale(1.1);
+    opacity: 0.65;
+  }
+  40%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+}
+
+@keyframes heart-beat-2 {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+    opacity: 0.5;
+  }
+  12% {
+    transform: scale(1.12) translateY(-3px);
+    opacity: 0.7;
+  }
+  24% {
+    transform: scale(1) translateY(0);
+    opacity: 0.5;
+  }
+  36% {
+    transform: scale(1.08) translateY(-2px);
+    opacity: 0.65;
+  }
+}
+
+@keyframes heart-beat-3 {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.5;
+  }
+  15% {
+    transform: scale(1.13) rotate(2deg);
+    opacity: 0.7;
+  }
+  30% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.5;
+  }
+  45% {
+    transform: scale(1.09) rotate(-2deg);
+    opacity: 0.65;
+  }
+}
+
+/* Syringe Animations */
+.syringe-float-1 {
+  animation: syringe-float-1 10s ease-in-out infinite;
+}
+
+.syringe-float-2 {
+  animation: syringe-float-2 12s ease-in-out infinite;
+}
+
+@keyframes syringe-float-1 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(-15deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(20px, -25px) rotate(-20deg);
+    opacity: 0.85;
+  }
+}
+
+@keyframes syringe-float-2 {
+  0%, 100% {
+    transform: translate(0, 0) rotate(15deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-20px, 20px) rotate(20deg);
+    opacity: 0.85;
+  }
+}
+
+/* Molecule Animations */
+.molecule-float-1 {
+  animation: molecule-rotate-1 20s linear infinite;
+}
+
+.molecule-float-2 {
+  animation: molecule-rotate-2 18s linear infinite;
+}
+
+.molecule-float-3 {
+  animation: molecule-rotate-3 22s linear infinite;
+}
+
+@keyframes molecule-rotate-1 {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.6;
+  }
+  25% {
+    transform: rotate(90deg) scale(1.08);
+    opacity: 0.75;
+  }
+  50% {
+    transform: rotate(180deg) scale(1);
+    opacity: 0.8;
+  }
+  75% {
+    transform: rotate(270deg) scale(1.08);
+    opacity: 0.75;
+  }
+}
+
+@keyframes molecule-rotate-2 {
+  0%, 100% {
+    transform: rotate(0deg) translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: rotate(180deg) translateY(-20px);
+    opacity: 0.85;
+  }
+}
+
+@keyframes molecule-rotate-3 {
+  0%, 100% {
+    transform: rotate(360deg) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* Additional Pulse Ring Animations */
+.pulse-ring-4 {
+  animation: pulse-expand-small 4s ease-out infinite;
+  animation-delay: 0s;
+}
+
+.pulse-ring-5 {
+  animation: pulse-expand-small 4s ease-out infinite;
+  animation-delay: 2s;
+}
+
+.pulse-ring-6 {
+  animation: pulse-expand-small 4.5s ease-out infinite;
+  animation-delay: 0.5s;
+}
+
+.pulse-ring-7 {
+  animation: pulse-expand-small 4.5s ease-out infinite;
+  animation-delay: 2.5s;
+}
+
+@keyframes pulse-expand-small {
+  0% {
+    r: 50;
+    opacity: 0.6;
+  }
+  100% {
+    r: 140;
+    opacity: 0;
+  }
+}
+
+/* Additional Connecting Lines */
+.connect-line-4 {
+  animation: line-pulse-4 5.5s ease-in-out infinite;
+}
+
+.connect-line-5 {
+  animation: line-pulse-5 6s ease-in-out infinite;
+}
+
+@keyframes line-pulse-4 {
+  0%, 100% {
+    opacity: 0.1;
+    stroke-dasharray: 8, 12;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    opacity: 0.18;
+    stroke-dashoffset: 20;
+  }
+}
+
+@keyframes line-pulse-5 {
+  0%, 100% {
+    opacity: 0.1;
+    stroke-dasharray: 8, 12;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    opacity: 0.18;
+    stroke-dashoffset: -20;
+  }
+}
+
+/* Radial Gradient Utility */
+.bg-gradient-radial {
+  background-image: radial-gradient(circle at center, var(--tw-gradient-stops));
+}
+
+/* Enhanced Heartbeat Container */
+.heartbeat-container {
+  opacity: 0.9;
+  mix-blend-mode: overlay;
+}
+
+/* Particle Glow Effect */
+.medical-particle {
+  filter: drop-shadow(0 0 3px oklch(60.92% 0.212 273.52 / 0.3));
+}
+
+/* Additional particle delays for new particles (20-29) */
+.particle-20 { animation-delay: 6s; }
+.particle-21 { animation-delay: 6.3s; }
+.particle-22 { animation-delay: 6.6s; }
+.particle-23 { animation-delay: 6.9s; }
+.particle-24 { animation-delay: 7.2s; }
+.particle-25 { animation-delay: 7.5s; }
+.particle-26 { animation-delay: 7.8s; }
+.particle-27 { animation-delay: 8.1s; }
+.particle-28 { animation-delay: 8.4s; }
+.particle-29 { animation-delay: 8.7s; }
+
+/* Smooth Fade-in for Content */
+@keyframes contentFadeIn {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -93,435 +442,117 @@
   }
 }
 
-/* Additional global styles */
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.relative.z-10 > * {
+  animation: contentFadeIn 0.8s ease-out forwards;
 }
 
-input::placeholder {
-  color: #9ca3af;
-}
-
-input:autofill,
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px white inset !important;
-}
-
-/* ======================================
-   Medical Auth Layout Animations
-   ====================================== */
-
-/* Morphing Gradient Orbs */
-.medical-orb-1 {
-  animation: orb-float-1 20s ease-in-out infinite;
-}
-
-.medical-orb-2 {
-  animation: orb-float-2 25s ease-in-out infinite;
-}
-
-.medical-orb-3 {
-  animation: orb-float-3 22s ease-in-out infinite;
-}
-
-.medical-orb-4 {
-  animation: orb-float-4 18s ease-in-out infinite;
-}
-
-@keyframes orb-float-1 {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(30px, -20px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 30px) scale(0.95);
+/* Responsive Enhancements */
+@media (max-width: 1024px) {
+  .medical-orb-1,
+  .medical-orb-2,
+  .medical-orb-3,
+  .medical-orb-4,
+  .medical-orb-5 {
+    animation-duration: 12s;
   }
 }
 
-@keyframes orb-float-2 {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(-40px, 30px) scale(1.15);
-  }
-}
-
-@keyframes orb-float-3 {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  40% {
-    transform: translate(25px, -30px) scale(1.08);
-  }
-  80% {
-    transform: translate(-30px, 20px) scale(0.92);
-  }
-}
-
-@keyframes orb-float-4 {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(20px, 25px) scale(1.12);
-  }
-}
-
-/* Floating Medical Crosses */
-.float-cross-1 {
-  animation: cross-float-1 8s ease-in-out infinite;
-}
-
-.float-cross-2 {
-  animation: cross-float-2 10s ease-in-out infinite;
-}
-
-.float-cross-3 {
-  animation: cross-float-3 9s ease-in-out infinite;
-}
-
-.float-cross-4 {
-  animation: cross-float-4 7s ease-in-out infinite;
-}
-
-@keyframes cross-float-1 {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0.15;
-  }
-  50% {
-    transform: translateY(-30px) rotate(5deg);
-    opacity: 0.25;
-  }
-}
-
-@keyframes cross-float-2 {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0.12;
-  }
-  50% {
-    transform: translateY(-25px) rotate(-5deg);
-    opacity: 0.22;
-  }
-}
-
-@keyframes cross-float-3 {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0.15;
-  }
-  50% {
-    transform: translateY(-20px) rotate(3deg);
-    opacity: 0.25;
-  }
-}
-
-@keyframes cross-float-4 {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0.1;
-  }
-  50% {
-    transform: translateY(-35px) rotate(-4deg);
-    opacity: 0.2;
-  }
-}
-
-/* DNA Strand Animations */
-.dna-float-1 {
-  animation: dna-spiral-1 15s linear infinite;
-}
-
-.dna-float-2 {
-  animation: dna-spiral-2 18s linear infinite;
-}
-
-@keyframes dna-spiral-1 {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateY(-40px) rotate(180deg);
-    opacity: 0.9;
-  }
-}
-
-@keyframes dna-spiral-2 {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateY(40px) rotate(-180deg);
-    opacity: 0.9;
-  }
-}
-
-/* Pill Capsule Animations */
-.pill-float-1 {
-  animation: pill-drift-1 12s ease-in-out infinite;
-}
-
-.pill-float-2 {
-  animation: pill-drift-2 14s ease-in-out infinite;
-}
-
-@keyframes pill-drift-1 {
-  0%, 100% {
-    transform: translate(0, 0) rotate(0deg);
-    opacity: 0.5;
-  }
-  25% {
-    transform: translate(20px, -15px) rotate(10deg);
-    opacity: 0.7;
-  }
-  50% {
-    transform: translate(30px, -30px) rotate(20deg);
-    opacity: 0.8;
-  }
-  75% {
-    transform: translate(15px, -20px) rotate(15deg);
-    opacity: 0.6;
-  }
-}
-
-@keyframes pill-drift-2 {
-  0%, 100% {
-    transform: translate(0, 0) rotate(0deg);
-    opacity: 0.5;
-  }
-  33% {
-    transform: translate(-20px, 15px) rotate(-10deg);
-    opacity: 0.7;
-  }
-  66% {
-    transform: translate(-30px, 25px) rotate(-15deg);
-    opacity: 0.8;
-  }
-}
-
-/* Stethoscope Animations */
-.stetho-float-1 {
-  animation: stetho-swing-1 10s ease-in-out infinite;
-}
-
-.stetho-float-2 {
-  animation: stetho-swing-2 11s ease-in-out infinite;
-}
-
-@keyframes stetho-swing-1 {
-  0%, 100% {
-    transform: translateX(0) rotate(0deg);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateX(15px) rotate(5deg);
-    opacity: 0.8;
-  }
-}
-
-@keyframes stetho-swing-2 {
-  0%, 100% {
-    transform: translateX(0) rotate(0deg);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateX(-15px) rotate(-5deg);
-    opacity: 0.8;
-  }
-}
-
-/* Pulse Ring Animations */
-.pulse-ring-1 {
-  animation: pulse-expand 3s ease-out infinite;
-  animation-delay: 0s;
-}
-
-.pulse-ring-2 {
-  animation: pulse-expand 3s ease-out infinite;
-  animation-delay: 1s;
-}
-
-.pulse-ring-3 {
-  animation: pulse-expand 3s ease-out infinite;
-  animation-delay: 2s;
-}
-
-@keyframes pulse-expand {
-  0% {
-    r: 80;
-    opacity: 0.5;
-  }
-  100% {
-    r: 200;
-    opacity: 0;
-  }
-}
-
-/* Medical Particle Animations */
-.medical-particle {
-  animation: particle-float 6s ease-in-out infinite;
-}
-
-.particle-0 { animation-delay: 0s; }
-.particle-1 { animation-delay: 0.3s; }
-.particle-2 { animation-delay: 0.6s; }
-.particle-3 { animation-delay: 0.9s; }
-.particle-4 { animation-delay: 1.2s; }
-.particle-5 { animation-delay: 1.5s; }
-.particle-6 { animation-delay: 1.8s; }
-.particle-7 { animation-delay: 2.1s; }
-.particle-8 { animation-delay: 2.4s; }
-.particle-9 { animation-delay: 2.7s; }
-.particle-10 { animation-delay: 3s; }
-.particle-11 { animation-delay: 3.3s; }
-.particle-12 { animation-delay: 3.6s; }
-.particle-13 { animation-delay: 3.9s; }
-.particle-14 { animation-delay: 4.2s; }
-.particle-15 { animation-delay: 4.5s; }
-.particle-16 { animation-delay: 4.8s; }
-.particle-17 { animation-delay: 5.1s; }
-.particle-18 { animation-delay: 5.4s; }
-.particle-19 { animation-delay: 5.7s; }
-
-@keyframes particle-float {
-  0%, 100% {
-    transform: translateY(0);
-    opacity: 0.2;
-  }
-  50% {
-    transform: translateY(-30px);
-    opacity: 0.5;
-  }
-}
-
-/* Connecting Lines Animation */
-.connect-line-1 {
-  animation: line-pulse-1 4s ease-in-out infinite;
-}
-
-.connect-line-2 {
-  animation: line-pulse-2 5s ease-in-out infinite;
-}
-
-.connect-line-3 {
-  animation: line-pulse-3 4.5s ease-in-out infinite;
-}
-
-@keyframes line-pulse-1 {
-  0%, 100% {
-    opacity: 0.08;
-    stroke-dasharray: 5, 10;
-    stroke-dashoffset: 0;
-  }
-  50% {
-    opacity: 0.15;
-    stroke-dashoffset: 15;
-  }
-}
-
-@keyframes line-pulse-2 {
-  0%, 100% {
-    opacity: 0.08;
-    stroke-dasharray: 5, 10;
-    stroke-dashoffset: 0;
-  }
-  50% {
-    opacity: 0.15;
-    stroke-dashoffset: -15;
-  }
-}
-
-@keyframes line-pulse-3 {
-  0%, 100% {
-    opacity: 0.08;
-    stroke-dasharray: 5, 10;
-    stroke-dashoffset: 0;
-  }
-  50% {
-    opacity: 0.15;
-    stroke-dashoffset: 15;
-  }
-}
-
-/* Decorative Plus Signs */
-.decorative-plus {
-  animation: plus-pulse 3s ease-in-out infinite;
-}
-
-.plus-0 { animation-delay: 0s; }
-.plus-1 { animation-delay: 0.4s; }
-.plus-2 { animation-delay: 0.8s; }
-.plus-3 { animation-delay: 1.2s; }
-.plus-4 { animation-delay: 1.6s; }
-.plus-5 { animation-delay: 2s; }
-.plus-6 { animation-delay: 2.4s; }
-.plus-7 { animation-delay: 2.8s; }
-
-@keyframes plus-pulse {
-  0%, 100% {
-    opacity: 0.1;
-    transform: scale(1) rotate(0deg);
-  }
-  50% {
-    opacity: 0.2;
-    transform: scale(1.1) rotate(5deg);
-  }
-}
-
-/* Heartbeat Container Smooth Flow */
-.heartbeat-container {
-  opacity: 0.8;
-}
-
-/* Responsive Adjustments */
 @media (max-width: 768px) {
   .medical-orb-1,
   .medical-orb-2,
   .medical-orb-3,
-  .medical-orb-4 {
-    animation-duration: 15s;
+  .medical-orb-4,
+  .medical-orb-5 {
+    opacity: 0.7;
   }
 
   .float-cross-1,
   .float-cross-2,
   .float-cross-3,
-  .float-cross-4 {
-    animation-duration: 6s;
+  .float-cross-4,
+  .float-cross-5,
+  .float-cross-6 {
+    animation-duration: 5s;
+  }
+
+  .dna-float-1,
+  .dna-float-2,
+  .dna-float-3 {
+    opacity: 0.5;
+  }
+
+  .molecule-float-1,
+  .molecule-float-2,
+  .molecule-float-3 {
+    opacity: 0.4;
   }
 }
 
-/* Performance Optimization - Reduced Motion */
+/* Dark Mode Adjustments */
+@media (prefers-color-scheme: dark) {
+  .heartbeat-container {
+    opacity: 0.6;
+  }
+
+  .medical-particle {
+    filter: drop-shadow(0 0 4px oklch(60.92% 0.212 273.52 / 0.5));
+  }
+
+  .decorative-plus {
+    opacity: 0.15;
+  }
+}
+
+/* Performance Optimization - Reduced Motion (Updated) */
 @media (prefers-reduced-motion: reduce) {
   .medical-orb-1,
   .medical-orb-2,
   .medical-orb-3,
   .medical-orb-4,
+  .medical-orb-5,
   .float-cross-1,
   .float-cross-2,
   .float-cross-3,
   .float-cross-4,
+  .float-cross-5,
+  .float-cross-6,
   .dna-float-1,
   .dna-float-2,
+  .dna-float-3,
   .pill-float-1,
   .pill-float-2,
+  .pill-float-3,
   .stetho-float-1,
   .stetho-float-2,
+  .heart-float-1,
+  .heart-float-2,
+  .heart-float-3,
+  .syringe-float-1,
+  .syringe-float-2,
+  .molecule-float-1,
+  .molecule-float-2,
+  .molecule-float-3,
   .pulse-ring-1,
   .pulse-ring-2,
   .pulse-ring-3,
+  .pulse-ring-4,
+  .pulse-ring-5,
+  .pulse-ring-6,
+  .pulse-ring-7,
   .medical-particle,
   .connect-line-1,
   .connect-line-2,
   .connect-line-3,
+  .connect-line-4,
+  .connect-line-5,
   .decorative-plus {
     animation: none;
   }
 }
 
+/* Hover Effects for Interactive Elements */
+@media (hover: hover) {
+  .relative.z-10:hover ~ .absolute .medical-particle {
+    animation-play-state: paused;
+  }
+}

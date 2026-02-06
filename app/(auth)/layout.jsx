@@ -287,8 +287,10 @@ export default function AuthLayout({ children }) {
             </div>
 
             {/* Multi-layer linear Overlay for Depth */}
-            <div className="absolute inset-0 bg-linear-to-br from-base-100/90 via-base-100/95 to-base-100/88 z-10" />
-            <div className="absolute inset-0 bg-linear-radial from-transparent via-base-100/30 to-base-100/60 z-20" />
+            <div className="absolute inset-0 bg-linear-to-br from-base-100/90 via-base-100/95 to-base-100/88 z-[5]" />
+            <div className="absolute inset-0 z-10" style={{
+                background: 'radial-linear(circle at 50% 50%, transparent 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.1) 100%)'
+            }} />
 
             {/* Content */}
             <div className="relative z-10">

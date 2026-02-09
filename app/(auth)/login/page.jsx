@@ -20,7 +20,32 @@ export default function LoginPage() {
 
     return (
         <div className="min-h-screen flex items-center justify-center p-5">
-            <div className="w-full max-w-110 bg-base-100 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.3)] p-8 animate-slideUp">
+            <div className="w-full max-w-110 bg-base-100 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.3)] p-8 animate-slideUp relative overflow-hidden">
+                {/* Corner decorations */}
+                <div className="corner-decoration corner-top-left" />
+                <div className="corner-decoration corner-top-right" />
+                <div className="corner-decoration corner-bottom-left" />
+                <div className="corner-decoration corner-bottom-right" />
+
+                {/* Top accent line */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-60" />
+
+                {/* Decorative SVG elements */}
+                <svg className="absolute top-6 right-6 w-16 h-16 opacity-[0.06]" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="oklch(60.92% 0.212 273.52)" strokeWidth="2" />
+                    <circle cx="50" cy="50" r="30" fill="none" stroke="oklch(60.92% 0.212 273.52)" strokeWidth="2" />
+                    <circle cx="50" cy="50" r="20" fill="none" stroke="oklch(60.92% 0.212 273.52)" strokeWidth="2" />
+                </svg>
+                <svg className="absolute bottom-6 left-6 w-14 h-14 opacity-[0.06]" viewBox="0 0 100 100">
+                    <path d="M50 10 L90 90 L10 90 Z" fill="none" stroke="oklch(60.92% 0.212 273.52)" strokeWidth="2" />
+                    <path d="M50 25 L75 75 L25 75 Z" fill="none" stroke="oklch(60.92% 0.212 273.52)" strokeWidth="2" />
+                </svg>
+
+                {/* Floating dots */}
+                <div className="floating-dot" style={{ top: '18%', right: '12%' }}></div>
+                <div className="floating-dot" style={{ bottom: '12%', left: '14%', animationDelay: '1s' }}></div>
+                <div className="floating-dot" style={{ top: '52%', left: '8%', animationDelay: '1.8s' }}></div>
+
                 {/* Header */}
                 <div className="text-center mb-6">
                     <h1 className="text-[28px] font-semibold text-base-content mb-2">
@@ -150,8 +175,67 @@ export default function LoginPage() {
             transform: translateY(0);
           }
         }
+
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+
         .animate-slideUp {
           animation: slideUp 0.5s ease-out;
+        }
+
+        .corner-decoration {
+          position: absolute;
+          width: 40px;
+          height: 40px;
+          opacity: 0.08;
+        }
+
+        .corner-top-left {
+          top: 0;
+          left: 0;
+          border-top: 3px solid oklch(60.92% 0.212 273.52);
+          border-left: 3px solid oklch(60.92% 0.212 273.52);
+          border-top-left-radius: 1rem;
+        }
+
+        .corner-top-right {
+          top: 0;
+          right: 0;
+          border-top: 3px solid oklch(60.92% 0.212 273.52);
+          border-right: 3px solid oklch(60.92% 0.212 273.52);
+          border-top-right-radius: 1rem;
+        }
+
+        .corner-bottom-left {
+          bottom: 0;
+          left: 0;
+          border-bottom: 3px solid oklch(60.92% 0.212 273.52);
+          border-left: 3px solid oklch(60.92% 0.212 273.52);
+          border-bottom-left-radius: 1rem;
+        }
+
+        .corner-bottom-right {
+          bottom: 0;
+          right: 0;
+          border-bottom: 3px solid oklch(60.92% 0.212 273.52);
+          border-right: 3px solid oklch(60.92% 0.212 273.52);
+          border-bottom-right-radius: 1rem;
+        }
+
+        .floating-dot {
+          position: absolute;
+          width: 6px;
+          height: 6px;
+          background: oklch(60.92% 0.212 273.52);
+          border-radius: 50%;
+          opacity: 0.15;
+          animation: float 3s ease-in-out infinite;
         }
       `}</style>
         </div>

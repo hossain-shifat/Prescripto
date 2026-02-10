@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { auth } from '@/lib/firebase/client';
 import { FirebaseError } from 'firebase/app';
-import { sendEmailVerification } from 'firebase/auth';
+import { applyActionCode, sendEmailVerification } from 'firebase/auth';
+import { buildVerificationActionCodeSettings } from '@/lib/firebase/actionCode';
 
 const cooldownDuration = 30;
 
@@ -20,17 +21,24 @@ export default function VerifyAccountPage() {
     const [isSending, setIsSending] = useState(false);
     const [cooldown, setCooldown] = useState(0);
     const [isChecking, setIsChecking] = useState(false);
+    const [actionCodeStatus, setActionCodeStatus] = useState('idle');
 
     const userEmail = auth.currentUser?.email ?? emailParam;
     const displayEmail = userEmail || 'your email address';
+    const oobCode = searchParams.get('oobCode');
+    const mode = searchParams.get('mode');
 
     useEffect(() => {
+        if (oobCode) {
+            return;
+        }
+
         if (source === 'register') {
             setStatusMessage('We just sent a verification link. Please check your inbox.');
         } else {
             setStatusMessage('');
         }
-    }, [source]);
+    }, [source, oobCode]);
 
     useEffect(() => {
         if (cooldown <= 0) {
@@ -44,6 +52,49 @@ export default function VerifyAccountPage() {
         return () => clearTimeout(timer);
     }, [cooldown]);
 
+    useEffect(() => {
+        if (!oobCode || mode !== 'verifyEmail') {
+            return;
+        }
+
+        let isCanceled = false;
+        let redirectTimer;
+
+        setActionCodeStatus('processing');
+        setStatusMessage('Applying the verification link...');
+        setFirebaseError('');
+
+        applyActionCode(auth, oobCode)
+            .then(() => {
+                if (isCanceled) {
+                    return;
+                }
+                setActionCodeStatus('success');
+                setStatusMessage('Email confirmed! Redirecting you to the main site...');
+                redirectTimer = setTimeout(() => {
+                    router.push('/');
+                }, 2200);
+            })
+            .catch((error) => {
+                if (isCanceled) {
+                    return;
+                }
+                if (error instanceof FirebaseError) {
+                    setFirebaseError(error.message);
+                } else {
+                    setFirebaseError('Unable to verify your email automatically.');
+                }
+                setActionCodeStatus('error');
+            });
+
+        return () => {
+            isCanceled = true;
+            if (redirectTimer) {
+                clearTimeout(redirectTimer);
+            }
+        };
+    }, [oobCode, mode, router]);
+
     const handleResend = async () => {
         if (!auth.currentUser) {
             setFirebaseError('Please sign in again to resend the verification email.');
@@ -54,7 +105,11 @@ export default function VerifyAccountPage() {
         setFirebaseError('');
 
         try {
-            await sendEmailVerification(auth.currentUser);
+            const actionSettings = buildVerificationActionCodeSettings({
+                email: auth.currentUser?.email,
+                source: 'resend',
+            });
+            await sendEmailVerification(auth.currentUser, actionSettings);
             setStatusMessage(`A fresh verification link was sent to ${displayEmail}.`);
             setCooldown(cooldownDuration);
         } catch (error) {

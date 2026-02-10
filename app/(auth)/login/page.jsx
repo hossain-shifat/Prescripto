@@ -4,11 +4,11 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { auth } from '@/lib/firebase/client';
-import { FirebaseError } from 'firebase/app';
 import { sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth';
 
 const getFirebaseErrorMessage = (error) => {
-    switch (error.code) {
+    const code = error?.code;
+    switch (code) {
         case 'auth/invalid-email':
             return 'Please enter a valid email address.';
         case 'auth/user-not-found':
@@ -18,7 +18,10 @@ const getFirebaseErrorMessage = (error) => {
         case 'auth/too-many-requests':
             return 'Too many failed login attempts. Please try again later.';
         default:
-            return error.message;
+            if (typeof error?.message === 'string' && error.message) {
+                return error.message;
+            }
+            return 'Unable to sign in right now. Please try again later.';
     }
 };
 
@@ -49,11 +52,7 @@ export default function LoginPage() {
 
             router.push('/');
         } catch (error) {
-            if (error instanceof FirebaseError) {
-                setFirebaseError(getFirebaseErrorMessage(error));
-            } else {
-                setFirebaseError('Unable to sign in right now. Please try again later.');
-            }
+            setFirebaseError(getFirebaseErrorMessage(error));
         } finally {
             setIsSubmitting(false);
         }

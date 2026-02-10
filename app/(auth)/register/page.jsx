@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { auth } from '@/lib/firebase/client';
 import { FirebaseError } from 'firebase/app';
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
+import { buildVerificationActionCodeSettings } from '@/lib/firebase/actionCode';
 
 const getRegisterErrorMessage = (error) => {
     switch (error.code) {
@@ -129,7 +130,12 @@ export default function RegisterPage() {
                 await updateProfile(credential.user, profileUpdates);
             }
 
-            await sendEmailVerification(credential.user);
+            const actionCodeSettings = buildVerificationActionCodeSettings({
+                email: data.email,
+                source: 'register',
+            });
+
+            await sendEmailVerification(credential.user, actionCodeSettings);
             router.push(`/verify?email=${encodeURIComponent(data.email)}&from=register`);
         } catch (error) {
             if (error instanceof FirebaseError) {

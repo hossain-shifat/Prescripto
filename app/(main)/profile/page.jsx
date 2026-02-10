@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { SquarePen, X } from 'lucide-react';
@@ -28,6 +29,7 @@ export default function ProfilePage() {
     const [statusMessage, setStatusMessage] = useState('');
     const [statusTone, setStatusTone] = useState('info');
     const [previewImage, setPreviewImage] = useState('');
+    const [showToast, setShowToast] = useState(false);
     const [districtOptions, setDistrictOptions] = useState([]);
     const [cityOptions, setCityOptions] = useState([]);
     const divisions = useMemo(() => getDivisions(), []);
@@ -84,6 +86,18 @@ export default function ProfilePage() {
         }
     }, [formState.division, formState.district]);
 
+    useEffect(() => {
+        if (!showToast) {
+            return undefined;
+        }
+
+        const timer = setTimeout(() => {
+            setShowToast(false);
+        }, 3200);
+
+        return () => clearTimeout(timer);
+    }, [showToast]);
+
     const handleInputChange = (field, value) => {
         setFormState((prev) => ({ ...prev, [field]: value }));
     };
@@ -116,10 +130,11 @@ export default function ProfilePage() {
         setStatusTone('success');
         setStatusMessage('Profile preferences saved locally. Real updates happen via Firebase console.');
         setIsEditing(false);
+        setShowToast(true);
     };
 
     return (
-        <section className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10">
+        <section className="mx-auto flex max-w-6xl flex-col gap-6 py-10">
             <div className="rounded-3xl bg-base-100/60 p-6 shadow-[0_30px_90px_rgba(15,15,15,0.08)]">
                 <div className="flex flex-col gap-3">
                     <p className="text-xs uppercase tracking-[0.4em] text-[#6b7280]">Account record</p>
@@ -135,26 +150,33 @@ export default function ProfilePage() {
                         >
                             {isEditing ? <X size={18} /> : <SquarePen size={18} />}
                         </button>
-                        <div className="relative mx-auto h-28 w-28 overflow-hidden rounded-full border-[3px] border-primary/50 bg-base-100/60">
+                        <label className="relative mx-auto block h-28 w-28 cursor-pointer overflow-visible rounded-full border-[3px] border-primary/50 bg-base-100/60">
                             {previewImage ? (
-                                <img src={previewImage} alt="avatar" className="h-full w-full object-cover" />
+                                <Image
+                                    src={previewImage}
+                                    alt="avatar"
+                                    width={112}
+                                    height={112}
+                                    className="h-full w-full rounded-full object-cover"
+                                />
                             ) : (
                                 <div className="flex h-full items-center justify-center text-3xl font-semibold uppercase text-white">
                                     {formState.name?.charAt(0) || 'A'}
                                 </div>
                             )}
-                        </div>
-                        {isEditing && (
-                            <label className="relative inline-flex cursor-pointer items-center rounded-full bg-base-200 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#5F6FFF] transition hover:bg-base-200/80">
-                                <span>Select new avatar</span>
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handleImageChange}
-                                    className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-                                />
-                            </label>
-                        )}
+                            <span
+                                className={`absolute bottom-2 right-2 z-30 flex h-8 w-8 items-center justify-center rounded-full border border-base-200 bg-white text-base-content shadow-lg transition hover:scale-105 focus-visible:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${isEditing ? 'opacity-100 pointer-events-auto' : 'opacity-80 pointer-events-none'}`}
+                            >
+                                <SquarePen size={16} />
+                            </span>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                disabled={!isEditing}
+                                className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                            />
+                        </label>
                         <div className="space-y-1 border-t border-base-300/60 pt-4 text-sm text-[#6b7280]">
                             <p>Member since {user?.metadata?.creationTime?.split(', ')[0] ?? 'N/A'}</p>
                             <p>Last login {user?.metadata?.lastSignInTime ?? 'not available'}</p>
@@ -283,7 +305,7 @@ export default function ProfilePage() {
                                 <div className="flex flex-wrap items-center gap-3">
                                     <button
                                         type="submit"
-                                        className="btn btn-primary h-fit rounded-2xl px-6 py-2 text-sm font-semibold uppercase tracking-[0.3em]"
+                                        className="btn btn-primary text-white h-fit rounded-2xl px-6 py-2 text-sm font-semibold capitalize tracking-[0.3em]"
                                     >
                                         Save updates
                                     </button>
@@ -342,12 +364,12 @@ export default function ProfilePage() {
                         </div>
                     </div>
                 </div>
-                <div className="mt-10 grid gap-4 rounded-2xl bg-base-200/60 p-5 text-sm text-[#374151] shadow-inner md:grid-cols-3">
-                    <div>
-                        <p className="text-xs uppercase tracking-[0.3em] text-[#6b7280]">Security status</p>
-                        <p className="text-2xl font-semibold text-base-content">Protected</p>
-                        <p className="text-xs text-[#9ca3af]">Two-factor authentication available in settings.</p>
-                    </div>
+            <div className="mt-10 grid gap-4 rounded-2xl bg-base-200/60 p-5 text-sm text-[#374151] shadow-inner md:grid-cols-3">
+                <div>
+                    <p className="text-xs uppercase tracking-[0.3em] text-[#6b7280]">Security status</p>
+                    <p className="text-2xl font-semibold text-base-content">Protected</p>
+                    <p className="text-xs text-[#9ca3af]">Two-factor authentication available in settings.</p>
+                </div>
                     <div>
                         <p className="text-xs uppercase tracking-[0.3em] text-[#6b7280]">Preferred actions</p>
                         <p className="font-semibold text-base-content">Push notifications</p>
@@ -364,6 +386,11 @@ export default function ProfilePage() {
                     </div>
                 </div>
             </div>
+            {showToast && (
+                <div className="pointer-events-none fixed right-5 bottom-5 z-50 rounded-2xl bg-success text-success-content px-5 py-3 text-sm font-semibold uppercase tracking-[0.3em] shadow-[0_25px_60px_rgba(37,99,235,0.35)] transition duration-300">
+                    Profile updated
+                </div>
+            )}
         </section>
     );
 }

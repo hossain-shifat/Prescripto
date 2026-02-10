@@ -165,7 +165,7 @@ export default function ProfilePage() {
                                 </div>
                             )}
                             <span
-                                className={`absolute bottom-2 right-2 z-30 flex h-8 w-8 items-center justify-center rounded-full border border-base-200 bg-white text-base-content shadow-lg transition hover:scale-105 focus-visible:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${isEditing ? 'opacity-100 pointer-events-auto' : 'opacity-80 pointer-events-none'}`}
+                                className={`absolute bottom-2 right-2 z-30 flex h-8 w-8 items-center justify-center rounded-full border border-base-200 bg-white text-base-content shadow-lg transition hover:scale-105 focus-visible:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${isEditing ? 'opacity-100 pointer-events-auto' : 'hidden'}`}
                             >
                                 <SquarePen size={16} />
                             </span>

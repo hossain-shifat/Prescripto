@@ -1,13 +1,75 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
+import { auth } from '@/lib/firebase/client';
+import { FirebaseError } from 'firebase/app';
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
+
+const getRegisterErrorMessage = (error) => {
+    switch (error.code) {
+        case 'auth/email-already-in-use':
+            return 'An account already exists with this email.';
+        case 'auth/invalid-email':
+            return 'Please enter a valid email address.';
+        case 'auth/weak-password':
+            return 'Use a stronger password (at least 8 characters).';
+        case 'auth/operation-not-allowed':
+            return 'Email/password sign-up is disabled in Firebase.';
+        default:
+            return error.message;
+    }
+};
+
+const IMGBB_UPLOAD_ENDPOINT = 'https://api.imgbb.com/1/upload';
+const imgbbKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+
+const readFileToDataUrl = (file) =>
+    new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+
+const uploadImageToImgbb = async (file) => {
+    if (!file || !imgbbKey) {
+        return '';
+    }
+
+    const dataUrl = await readFileToDataUrl(file);
+    const [, payload] = (dataUrl ?? '').split(',');
+
+    if (!payload) {
+        throw new Error('Unable to process the selected image.');
+    }
+
+    const formData = new FormData();
+    formData.append('image', payload);
+
+    const response = await fetch(`${IMGBB_UPLOAD_ENDPOINT}?key=${encodeURIComponent(imgbbKey)}`, {
+        method: 'POST',
+        body: formData,
+    });
+
+    const json = await response.json();
+
+    if (!response.ok || !json || !json.success) {
+        throw new Error(json?.error?.message ?? 'Image upload failed.');
+    }
+
+    return json.data?.url ?? '';
+};
 
 export default function RegisterPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [profileImage, setProfileImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [firebaseError, setFirebaseError] = useState('');
+    const router = useRouter();
 
     const {
         register,
@@ -19,25 +81,65 @@ export default function RegisterPage() {
 
     const fullName = watch('fullName');
 
-    const handleImageChange = (e) => {
+    const handleImageChange = async (e) => {
         const file = e.target.files?.[0];
-        if (file) {
-            setProfileImage(file);
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImagePreview(reader.result);
-            };
-            reader.readAsDataURL(file);
+        if (!file) {
+            setProfileImage(null);
+            setImagePreview(null);
+            return;
+        }
+
+        setProfileImage(file);
+        try {
+            const preview = await readFileToDataUrl(file);
+            setImagePreview(preview);
+        } catch (error) {
+            console.error('Unable to preview image', error);
+            setImagePreview(null);
         }
     };
 
-    const onSubmit = (data) => {
-        console.log({
-            ...data,
-            profileImage: profileImage,
-        });
-        alert('Account created successfully! 🎉');
-        // Here you would typically send the data to your API
+    const onSubmit = async (data) => {
+        setIsSubmitting(true);
+        setFirebaseError('');
+
+        let photoUrl = '';
+        if (profileImage) {
+            try {
+                photoUrl = await uploadImageToImgbb(profileImage);
+            } catch (uploadError) {
+                setFirebaseError(uploadError.message ?? 'Unable to upload the profile image right now.');
+                setIsSubmitting(false);
+                return;
+            }
+        }
+
+        try {
+            const credential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+
+            const profileUpdates = {};
+            if (data.fullName?.trim()) {
+                profileUpdates.displayName = data.fullName.trim();
+            }
+            if (photoUrl) {
+                profileUpdates.photoURL = photoUrl;
+            }
+
+            if (Object.keys(profileUpdates).length > 0) {
+                await updateProfile(credential.user, profileUpdates);
+            }
+
+            await sendEmailVerification(credential.user);
+            router.push(`/verify?email=${encodeURIComponent(data.email)}&from=register`);
+        } catch (error) {
+            if (error instanceof FirebaseError) {
+                setFirebaseError(getRegisterErrorMessage(error));
+            } else {
+                setFirebaseError('We had trouble creating your account. Please try again later.');
+            }
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const getInitial = () => {
@@ -270,12 +372,21 @@ export default function RegisterPage() {
                         )}
                     </div>
 
+                    {firebaseError && (
+                        <div className="mb-4 rounded-lg border border-[#fecaca] bg-[#fff1f2] px-4 py-2 text-sm font-medium text-[#b91c1c]">
+                            {firebaseError}
+                        </div>
+                    )}
+
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className="w-full py-3 mt-1 bg-primary text-white border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all shadow-[0_4px_12px_rgba(102,126,234,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] active:translate-y-0 relative overflow-hidden group"
+                        disabled={isSubmitting}
+                        aria-busy={isSubmitting}
+                        className={`w-full py-3 mt-1 bg-primary text-white border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all shadow-[0_4px_12px_rgba(102,126,234,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] active:translate-y-0 relative overflow-hidden group ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                            }`}
                     >
-                        <span className="relative z-10">Create Account</span>
+                        <span className="relative z-10">{isSubmitting ? 'Creating account...' : 'Create Account'}</span>
                         <div className="button-shine"></div>
                     </button>
 

@@ -1,10 +1,32 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { auth } from '@/lib/firebase/client';
+import { FirebaseError } from 'firebase/app';
+import { sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth';
+
+const getFirebaseErrorMessage = (error) => {
+    switch (error.code) {
+        case 'auth/invalid-email':
+            return 'Please enter a valid email address.';
+        case 'auth/user-not-found':
+            return 'No account found with that email address.';
+        case 'auth/wrong-password':
+            return 'Incorrect password.';
+        case 'auth/too-many-requests':
+            return 'Too many failed login attempts. Please try again later.';
+        default:
+            return error.message;
+    }
+};
 
 export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [firebaseError, setFirebaseError] = useState('');
+    const router = useRouter();
 
     const {
         register,
@@ -12,10 +34,29 @@ export default function LoginPage() {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data);
-        alert('Login successful! 🎉');
-        // Here you would typically send the data to your API
+    const onSubmit = async (data) => {
+        setIsSubmitting(true);
+        setFirebaseError('');
+
+        try {
+            const credential = await signInWithEmailAndPassword(auth, data.email, data.password);
+
+            if (!credential.user.emailVerified) {
+                await sendEmailVerification(credential.user);
+                router.push(`/verify?email=${encodeURIComponent(data.email)}&from=login`);
+                return;
+            }
+
+            router.push('/');
+        } catch (error) {
+            if (error instanceof FirebaseError) {
+                setFirebaseError(getFirebaseErrorMessage(error));
+            } else {
+                setFirebaseError('Unable to sign in right now. Please try again later.');
+            }
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -141,12 +182,21 @@ export default function LoginPage() {
                         </a>
                     </div>
 
+                    {firebaseError && (
+                        <div className="mb-4 rounded-lg border border-[#fecaca] bg-[#fff1f2] px-4 py-2 text-sm font-medium text-[#b91c1c]">
+                            {firebaseError}
+                        </div>
+                    )}
+
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className="w-full py-3 mt-1 bg-primary text-white border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all shadow-[0_4px_12px_rgba(102,126,234,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] active:translate-y-0"
+                        disabled={isSubmitting}
+                        aria-busy={isSubmitting}
+                        className={`w-full py-3 mt-1 bg-primary text-white border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all shadow-[0_4px_12px_rgba(102,126,234,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] active:translate-y-0 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                            }`}
                     >
-                        Login
+                        {isSubmitting ? 'Logging in...' : 'Login'}
                     </button>
 
                     {/* Register Link */}

@@ -2,9 +2,27 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { auth } from '@/lib/firebase/client';
+import { FirebaseError } from 'firebase/app';
+import { sendPasswordResetEmail } from 'firebase/auth';
+
+const getResetErrorMessage = (error) => {
+    switch (error.code) {
+        case 'auth/invalid-email':
+            return 'Please enter a valid email address.';
+        case 'auth/user-not-found':
+            return 'No account is registered with that email.';
+        case 'auth/too-many-requests':
+            return 'Too many reset attempts. Try again later.';
+        default:
+            return error.message;
+    }
+};
 
 export default function ForgotPasswordPage() {
     const [emailSent, setEmailSent] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [firebaseError, setFirebaseError] = useState('');
 
     const {
         register,
@@ -12,13 +30,22 @@ export default function ForgotPasswordPage() {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data);
-        setEmailSent(true);
-        // Here you would typically send the data to your API
-        setTimeout(() => {
-            alert('Password reset link sent to your email! 📧');
-        }, 500);
+    const onSubmit = async (data) => {
+        setIsSubmitting(true);
+        setFirebaseError('');
+
+        try {
+            await sendPasswordResetEmail(auth, data.email);
+            setEmailSent(true);
+        } catch (error) {
+            if (error instanceof FirebaseError) {
+                setFirebaseError(getResetErrorMessage(error));
+            } else {
+                setFirebaseError('Unable to send the reset link right now. Please try again later.');
+            }
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -43,34 +70,43 @@ export default function ForgotPasswordPage() {
                                 <label htmlFor="email" className="block text-sm font-medium text-[#374151] mb-1.5">
                                     Email
                                 </label>
-                                <input
-                                    type="email"
-                                    id="email"
+                        <input
+                            type="email"
+                            id="email"
                                     placeholder="Enter your email address"
                                     className={`w-full px-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-[#667eea] focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] placeholder:text-[#9ca3af] ${errors.email ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
                                         }`}
-                                    {...register('email', {
-                                        required: 'Please enter your email address',
-                                        pattern: {
-                                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                            message: 'Please enter a valid email address',
-                                        },
-                                    })}
-                                />
-                                {errors.email && (
-                                    <span className="block text-xs text-[#ef4444] mt-1">
-                                        {errors.email.message}
-                                    </span>
-                                )}
-                            </div>
+                            {...register('email', {
+                                required: 'Please enter your email address',
+                                pattern: {
+                                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                    message: 'Please enter a valid email address',
+                                },
+                            })}
+                        />
+                        {errors.email && (
+                            <span className="block text-xs text-[#ef4444] mt-1">
+                                {errors.email.message}
+                            </span>
+                        )}
+                    </div>
 
-                            {/* Submit Button */}
-                            <button
-                                type="submit"
-                                className="w-full py-3 mt-1 bg-primary text-white border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all shadow-[0_4px_12px_rgba(102,126,234,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] active:translate-y-0"
-                            >
-                                Send Reset Link
-                            </button>
+                    {firebaseError && (
+                        <div className="mb-4 rounded-lg border border-[#fecaca] bg-[#fff1f2] px-4 py-2 text-sm font-medium text-[#b91c1c]">
+                            {firebaseError}
+                        </div>
+                    )}
+
+                    {/* Submit Button */}
+                    <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        aria-busy={isSubmitting}
+                        className={`w-full py-3 mt-1 bg-primary text-white border-none rounded-lg text-[15px] font-semibold cursor-pointer transition-all shadow-[0_4px_12px_rgba(102,126,234,0.4)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(102,126,234,0.5)] active:translate-y-0 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                            }`}
+                    >
+                        {isSubmitting ? 'Sending reset link...' : 'Send Reset Link'}
+                    </button>
 
                             {/* Back to Login Link */}
                             <div className="text-center mt-5">

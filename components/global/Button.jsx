@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default function Button({ text, style = '', smd = false, rounded = false, href }) {
+export default function Button({ text, style = '', smd = true, rounded = false, href }) {
     const classes = `btn bg-[#5F6FFF] text-base-content ${style} ${smd ? '' : 'hidden md:block'} ${rounded ? 'rounded-full' : 'rounded-md'}`;
 
     if (href) {

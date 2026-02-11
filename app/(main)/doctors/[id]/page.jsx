@@ -4,16 +4,48 @@ import Card from "@/components/global/Card";
 import { Info, Verified, X } from "lucide-react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { auth } from "@/lib/firebase/client";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function DoctorDetails() {
     const params = useParams()
     const router = useRouter()
 
-    const doctor = doctors.find(doc => doc._id === params.id)
-
+    const [authChecked, setAuthChecked] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+            if (!firebaseUser) {
+                router.replace("/login");
+                return;
+            }
+
+            setAuthChecked(true);
+        });
+
+        return unsubscribe;
+    }, [router]);
+
+    const doctor = doctors.find(doc => doc._id === params.id)
+
+    if (!authChecked) {
+        return (
+            <section className="flex min-h-[60vh] items-center justify-center px-4">
+                <p className="text-sm text-[#6b7280]">Checking your session...</p>
+            </section>
+        );
+    }
+
+    if (!doctor) {
+        return (
+            <section className="flex min-h-[60vh] items-center justify-center px-4">
+                <p className="text-sm text-[#6b7280]">Doctor not found.</p>
+            </section>
+        );
+    }
 
     const relatedDoctors = doctors.filter(
         doc => doc.speciality === doctor.speciality && doc._id !== doctor._id

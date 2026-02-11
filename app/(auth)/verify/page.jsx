@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Mail, ShieldCheck, Sparkles } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { auth } from '@/lib/firebase/client';
@@ -27,6 +28,24 @@ export default function VerifyAccountPage() {
     const displayEmail = userEmail || 'your email address';
     const oobCode = searchParams.get('oobCode');
     const mode = searchParams.get('mode');
+
+    const verificationSteps = [
+        {
+            title: 'Check the inbox we just touched',
+            description: `The verification link landed in ${displayEmail}. Give it a minute and peek into spam folders if it does not appear instantly.`,
+            icon: Mail,
+        },
+        {
+            title: 'Tap the magical link',
+            description: 'The link is one-time use and carries the token we need to confirm your email, then the page applies it automatically.',
+            icon: Sparkles,
+        },
+        {
+            title: 'Head back to Prescripto',
+            description: 'After successful confirmation you will be redirected, or you can resume from this page by clicking the buttons below.',
+            icon: ShieldCheck,
+        },
+    ];
 
     useEffect(() => {
         if (oobCode) {
@@ -231,6 +250,22 @@ export default function VerifyAccountPage() {
                         Back to Login
                     </Link>
                 </div>
+                <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                    {verificationSteps.map((step) => (
+                        <div key={step.title} className="rounded-2xl border border-base-200/80 bg-base-200/60 px-4 py-3 shadow-inner">
+                            <div className="flex items-center gap-2 text-sm font-semibold text-base-content">
+                                <step.icon className="h-4 w-4 text-[#667eea]" />
+                                <span>{step.title}</span>
+                            </div>
+                            <p className="mt-1 text-xs text-base-content/80 leading-snug">{step.description}</p>
+                        </div>
+                    ))}
+                </div>
+                <p className="mt-6 text-center text-xs text-[#6b7280]">
+                    {source === 'register'
+                        ? 'After email confirmation we send you back to the home page automatically.'
+                        : 'If the link has expired, send another verification email or refresh the status.'}
+                </p>
             </div>
 
             <style jsx>{`

@@ -125,7 +125,7 @@ export default function Navbar() {
                             )}
                         </div>
                     ) : (
-                        <Button text="Create account" smd={false} rounded href="/register" />
+                        <Button text="Create account" rounded href="/register" />
                     )}
                 </div>
             </div>

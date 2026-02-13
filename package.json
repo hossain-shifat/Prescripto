@@ -10,12 +10,13 @@
   },
   "dependencies": {
     "daisyui": "^5.5.14",
+    "firebase": "^11.0.0",
     "lucide-react": "^0.563.0",
+    "mongodb": "^7.1.0",
     "motion": "^12.31.0",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "firebase": "^11.0.0",
     "react-form-hook": "^0.0.1",
     "react-hook-form": "^7.71.1"
   },

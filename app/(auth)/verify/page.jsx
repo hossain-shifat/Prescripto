@@ -8,6 +8,7 @@ import { auth } from '@/lib/firebase/client';
 import { FirebaseError } from 'firebase/app';
 import { applyActionCode, sendEmailVerification } from 'firebase/auth';
 import { buildVerificationActionCodeSettings } from '@/lib/firebase/actionCode';
+import { persistUserProfile } from '@/lib/api/users';
 
 const cooldownDuration = 30;
 
@@ -71,6 +72,22 @@ export default function VerifyAccountPage() {
         return () => clearTimeout(timer);
     }, [cooldown]);
 
+    const markEmailVerifiedInDb = async () => {
+        const currentUser = auth.currentUser;
+        if (!currentUser?.uid || !currentUser.email) {
+            return;
+        }
+        try {
+            await persistUserProfile({
+                uid: currentUser.uid,
+                email: currentUser.email,
+                emailVerified: true,
+            });
+        } catch (error) {
+            console.error('Unable to update verification status in MongoDB', error);
+        }
+    };
+
     useEffect(() => {
         if (!oobCode || mode !== 'verifyEmail') {
             return;
@@ -84,10 +101,11 @@ export default function VerifyAccountPage() {
         setFirebaseError('');
 
         applyActionCode(auth, oobCode)
-            .then(() => {
+            .then(async () => {
                 if (isCanceled) {
                     return;
                 }
+                await markEmailVerifiedInDb();
                 setActionCodeStatus('success');
                 setStatusMessage('Email confirmed! Redirecting you to the main site...');
                 redirectTimer = setTimeout(() => {
@@ -154,6 +172,7 @@ export default function VerifyAccountPage() {
         try {
             await auth.currentUser.reload();
             if (auth.currentUser.emailVerified) {
+                await markEmailVerifiedInDb();
                 router.push('/');
                 return;
             }

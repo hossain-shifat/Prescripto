@@ -8,6 +8,7 @@ import { auth } from '@/lib/firebase/client';
 import { FirebaseError } from 'firebase/app';
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
 import { buildVerificationActionCodeSettings } from '@/lib/firebase/actionCode';
+import { persistUserProfile } from '@/lib/api/users';
 
 const getRegisterErrorMessage = (error) => {
     switch (error.code) {
@@ -64,6 +65,14 @@ const uploadImageToImgbb = async (file) => {
     return json.data?.url ?? '';
 };
 
+const formatPhoneNumberForStorage = (value = '') => {
+    const digits = value.replace(/[^0-9]/g, '');
+    if (!digits) {
+        return '';
+    }
+    return `+880${digits}`;
+};
+
 export default function RegisterPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [profileImage, setProfileImage] = useState(null);
@@ -78,7 +87,11 @@ export default function RegisterPage() {
         watch,
         setValue,
         formState: { errors },
-    } = useForm();
+    } = useForm({
+        defaultValues: {
+            role: 'user',
+        },
+    });
 
     const fullName = watch('fullName');
 
@@ -130,6 +143,17 @@ export default function RegisterPage() {
                 await updateProfile(credential.user, profileUpdates);
             }
 
+            const accountCreationTime = credential.user.metadata?.creationTime ?? new Date().toISOString();
+            await persistUserProfile({
+                uid: credential.user.uid,
+                email: data.email,
+                fullName: data.fullName?.trim() ?? '',
+                phone: formatPhoneNumberForStorage(data.phone),
+                role: data.role ?? 'user',
+                photoUrl,
+                accountCreatedAt: accountCreationTime,
+            });
+
             const actionCodeSettings = buildVerificationActionCodeSettings({
                 email: data.email,
                 source: 'register',
@@ -141,7 +165,9 @@ export default function RegisterPage() {
             if (error instanceof FirebaseError) {
                 setFirebaseError(getRegisterErrorMessage(error));
             } else {
-                setFirebaseError('We had trouble creating your account. Please try again later.');
+                setFirebaseError(
+                    error?.message ?? 'We had trouble creating your account. Please try again later.',
+                );
             }
         } finally {
             setIsSubmitting(false);
@@ -327,6 +353,29 @@ export default function RegisterPage() {
                         {errors.phone && (
                             <span className="block text-xs text-[#ef4444] mt-1">
                                 {errors.phone.message}
+                            </span>
+                        )}
+                    </div>
+
+                    {/* Role */}
+                    <div className="mb-4">
+                        <label htmlFor="role" className="block text-sm font-medium text-[#374151] mb-1.5">
+                            Role
+                        </label>
+                        <select
+                            id="role"
+                            className={`w-full px-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] appearance-none ${errors.role ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
+                                }`}
+                            {...register('role', {
+                                required: 'Please select a role',
+                            })}
+                        >
+                            <option value="user">User</option>
+                            <option value="doctor">Doctor</option>
+                        </select>
+                        {errors.role && (
+                            <span className="block text-xs text-[#ef4444] mt-1">
+                                {errors.role.message}
                             </span>
                         )}
                     </div>
@@ -545,3 +594,4 @@ export default function RegisterPage() {
         </div>
     );
 }
+

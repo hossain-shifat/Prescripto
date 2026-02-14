@@ -76,8 +76,8 @@ export default function Navbar() {
                     <NavLinks />
                 </div>
                 <div className="navbar-end flex items-center gap-2 lg:gap-3">
-                    <NotificationBell />
                     <ToggleTheme />
+                    <NotificationBell />
                     {user ? (
                         <div ref={menuRef} className="relative hidden md:block">
                             <button

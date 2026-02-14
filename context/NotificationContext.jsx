@@ -79,10 +79,19 @@ export function NotificationProvider({ children }) {
         setNotifications([]);
     }, []);
 
+    const markNotificationRead = useCallback((id) => {
+        setNotifications((prev) =>
+            prev.map((notification) =>
+                notification.id === id ? { ...notification, read: true } : notification,
+            ),
+        );
+    }, []);
+
     const value = useMemo(() => ({
         notifications,
         addNotification,
         markAllRead,
+        markNotificationRead,
         clearNotifications,
     }), [notifications, addNotification, markAllRead, clearNotifications]);
 

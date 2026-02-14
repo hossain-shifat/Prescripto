@@ -11,6 +11,7 @@ import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } 
 import { buildVerificationActionCodeSettings } from '@/lib/firebase/actionCode';
 import { persistUserProfile } from '@/lib/api/users';
 import SocialLogin from '@/components/global/SocialLogin';
+import { ChevronDown } from 'lucide-react';
 
 const getRegisterErrorMessage = (error) => {
     switch (error.code) {
@@ -80,6 +81,7 @@ export default function RegisterPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [profileImage, setProfileImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
+    const [imageError, setImageError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [firebaseError, setFirebaseError] = useState('');
     const router = useRouter();
@@ -100,6 +102,7 @@ export default function RegisterPage() {
 
     const handleImageChange = async (e) => {
         const file = e.target.files?.[0];
+        setImageError('');
         if (!file) {
             setProfileImage(null);
             setImagePreview(null);
@@ -117,6 +120,10 @@ export default function RegisterPage() {
     };
 
     const onSubmit = async (data) => {
+        if (!imagePreview) {
+            setImageError('Please upload a profile photo.');
+            return;
+        }
         setIsSubmitting(true);
         setFirebaseError('');
 
@@ -188,17 +195,17 @@ export default function RegisterPage() {
             return;
         }
 
-            try {
-                await persistUserProfile({
-                    uid: user.uid,
-                    email: user.email,
-                    fullName: user.displayName ?? '',
-                    phone: user.phoneNumber ?? '',
-                    photoUrl: user.photoURL ?? '',
-                    accountCreatedAt: user.metadata?.creationTime,
-                    signInMethod: 'google',
-                    emailVerified: user.emailVerified,
-                });
+        try {
+            await persistUserProfile({
+                uid: user.uid,
+                email: user.email,
+                fullName: user.displayName ?? '',
+                phone: user.phoneNumber ?? '',
+                photoUrl: user.photoURL ?? '',
+                accountCreatedAt: user.metadata?.creationTime,
+                signInMethod: 'google',
+                emailVerified: user.emailVerified,
+            });
         } catch (error) {
             console.error('Error persisting social login profile', error);
         }
@@ -250,33 +257,32 @@ export default function RegisterPage() {
                     </p>
                 </div>
                 {/* Profile Image Upload */}
-                <div className="flex flex-col items-center mb-6 relative z-10">
-                    <div className="relative mb-2">
-                        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary via-[#764ba2] to-primary flex items-center justify-center overflow-hidden border-[3px] border-base-200 shadow-[0_3px_10px_rgba(0,0,0,0.1)] relative">
-                            {/* Profile ring decoration */}
-                            <div className="profile-ring"></div>
-
+                <div className="flex flex-col items-center gap-3 mb-6 relative z-10">
+                    <div className="relative">
+                        <div
+                            className={`h-20 w-20 border transition-all duration-200 ${
+                                imagePreview
+                                    ? 'rounded-full border-[3px] border-base-200 shadow-[0_3px_10px_rgba(0,0,0,0.1)]'
+                                    : 'rounded-2xl border-dashed border-[#d1d5db] bg-base-200/70'
+                            } flex items-center justify-center overflow-hidden`}
+                        >
                             {imagePreview ? (
                                 <Image
                                     src={imagePreview}
                                     alt="Profile preview"
                                     width={80}
                                     height={80}
-                                    className="w-full h-full object-cover"
+                                    className="h-full w-full object-cover"
                                 />
                             ) : (
-                                <span className="text-[32px] text-white font-light relative z-10">
-                                    {getInitial()}
-                                </span>
+                                <span className="text-2xl font-semibold text-[#6b7280]">{getInitial()}</span>
                             )}
                         </div>
                         <label
                             htmlFor="profileImage"
-                            className="absolute bottom-0 right-0 w-7 h-7 bg-primary hover:bg-[oklch(58% 0.212 273.52)] rounded-full flex items-center justify-center cursor-pointer shadow-[0_2px_6px_rgba(102,126,234,0.4)] transition-all hover:scale-110"
+                            className="absolute -bottom-1 -right-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border border-white bg-white text-xs font-semibold text-primary shadow transition hover:scale-[1.05]"
                         >
-                            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-white">
-                                <path d="M12 5v14m7-7H5" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" />
-                            </svg>
+                            +
                         </label>
                         <input
                             type="file"
@@ -284,11 +290,15 @@ export default function RegisterPage() {
                             accept="image/*"
                             onChange={handleImageChange}
                             className="hidden"
+                            required
                         />
                     </div>
-                    <span className="text-xs text-primary font-medium">
-                        Upload Photo
-                    </span>
+                    <p className="text-xs uppercase tracking-[0.3em] text-[#9ca3af]">
+                        Profile photo (required)
+                    </p>
+                    {imageError && (
+                        <p className="text-[11px] text-error mt-1">{imageError}</p>
+                    )}
                 </div>
 
                 {/* Form */}
@@ -391,17 +401,19 @@ export default function RegisterPage() {
                         <label htmlFor="role" className="block text-sm font-medium text-[#374151] mb-1.5">
                             Role
                         </label>
-                        <select
-                            id="role"
-                            className={`w-full px-4 py-2.5 border-[1.5px] rounded-lg text-sm text-base-content transition-all bg-base-200 focus:bg-base-100 focus:outline-none focus:border-primary focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] appearance-none ${errors.role ? 'border-[#ef4444] bg-[#fef2f2]' : 'border-[#e5e7eb]'
-                                }`}
-                            {...register('role', {
-                                required: 'Please select a role',
-                            })}
-                        >
-                            <option value="user">User</option>
-                            <option value="doctor">Doctor</option>
-                        </select>
+                        <div className="relative">
+                            <select
+                                id="role"
+                                className={`w-full rounded-lg border-[1.5px] border-base-200 bg-base-200 px-4 py-2.5 pr-10 text-sm text-base-content transition-colors focus:border-primary focus:bg-base-100 focus:outline-none focus:shadow-[0_0_0_3px_rgba(102,126,234,0.1)] appearance-none ${errors.role ? 'border-[#ef4444] bg-[#fef2f2]' : ''}`}
+                                {...register('role', {
+                                    required: 'Please select a role',
+                                })}
+                            >
+                                <option value="user">User</option>
+                                <option value="doctor">Doctor</option>
+                            </select>
+                            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6b7280]" />
+                        </div>
                         {errors.role && (
                             <span className="block text-xs text-[#ef4444] mt-1">
                                 {errors.role.message}

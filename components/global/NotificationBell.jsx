@@ -2,6 +2,7 @@
 
 import { Bell, CheckCircle2, Info, XCircle } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useNotifications } from '@/context/NotificationContext';
 
 const ICON_MAP = {
@@ -35,24 +36,17 @@ function formatTimestamp(value) {
 export default function NotificationBell() {
     const {
         notifications,
-        markAllRead,
+        markNotificationRead,
         clearNotifications,
     } = useNotifications();
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef(null);
+    const router = useRouter();
 
     const unreadCount = useMemo(
         () => notifications.filter((notification) => !notification.read).length,
         [notifications],
     );
-
-    useEffect(() => {
-        if (!open || unreadCount === 0) {
-            return;
-        }
-
-        markAllRead();
-    }, [open, markAllRead, unreadCount]);
 
     useEffect(() => {
         if (!open) {
@@ -76,12 +70,18 @@ export default function NotificationBell() {
         clearNotifications();
     };
 
+    const handleNotificationClick = (notification) => {
+        setOpen(false);
+        markNotificationRead(notification.id);
+        router.push(`/notifications/${notification.id}`);
+    };
+
     return (
         <div className="relative" ref={dropdownRef}>
             <button
                 type="button"
                 onClick={toggleDropdown}
-                className="btn btn-ghost btn-square relative h-11 w-11 rounded-full border border-base-200/50 p-0 text-base-content transition hover:bg-base-200/60"
+                className="btn btn-ghost btn-square relative h-11 w-11 border border-base-200/50 p-0 text-base-content transition hover:bg-base-200/60"
                 aria-expanded={open}
                 aria-label="Toggle notifications"
             >
@@ -95,17 +95,17 @@ export default function NotificationBell() {
 
             {open && (
                 <div className="absolute right-0 z-50 mt-2 min-w-[18rem] rounded-2xl border border-base-200/60 bg-base-100/95 shadow-[0_25px_60px_rgba(8,8,8,0.25)] backdrop-blur">
-                    <div className="flex items-center justify-between px-4 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-[#6b7280]">
+                    <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-[#6b7280]">
                         <span>Notifications</span>
                         <button
                             type="button"
                             onClick={handleClear}
-                            className="text-[11px] uppercase tracking-[0.4em] text-[#9ca3af] transition hover:text-base-content"
+                            className="text-[11px] uppercase tracking-[0.4em] text-error transition hover:text-base-content"
                         >
                             Clear
                         </button>
                     </div>
-                    <div className="max-h-64 overflow-y-auto rounded-b-2xl">
+                    <div className="max-h-72 overflow-y-auto rounded-b-2xl">
                         {notifications.length === 0 ? (
                             <p className="px-4 py-6 text-center text-sm text-[#9ca3af]">
                                 You're all caught up.
@@ -114,15 +114,15 @@ export default function NotificationBell() {
                             notifications.map((notification) => {
                                 const Icon = ICON_MAP[notification.type] ?? Info;
                                 return (
-                                    <div
+                                    <button
                                         key={notification.id}
-                                        className={`grid grid-cols-[auto_1fr] gap-3 px-4 py-3 text-sm first:pt-0 last:pb-4 ${typeColors[notification.type] ?? typeColors.info} border-t border-base-200/60`}
+                                        type="button"
+                                        onClick={() => handleNotificationClick(notification)}
+                                        className={`group flex w-full items-start gap-3 px-4 py-3 text-sm text-left transition hover:bg-base-200/80 sm:px-5 sm:gap-4 ${typeColors[notification.type] ?? typeColors.info} border-t border-base-200/60`}
                                     >
-                                        <div className="pt-1">
-                                            <Icon size={18} />
-                                        </div>
-                                        <div className="space-y-1">
-                                            <p className="font-semibold text-base-content">
+                                        <Icon className="h-5 w-5 flex-shrink-0 text-base-content" />
+                                        <div className="flex-1 space-y-1">
+                                            <p className="font-semibold text-base-content transition group-hover:text-primary">
                                                 {notification.title}
                                             </p>
                                             {notification.description && (
@@ -134,7 +134,7 @@ export default function NotificationBell() {
                                                 {formatTimestamp(notification.createdAt)}
                                             </p>
                                         </div>
-                                    </div>
+                                    </button>
                                 );
                             })
                         )}

@@ -6,6 +6,7 @@ import { ChevronDown, LogOut, Settings, User } from 'lucide-react';
 import Logo from './Logo';
 import Sidebar from './Sidebar';
 import ToggleTheme from '../global/ToggleTheme';
+import NotificationBell from '../global/NotificationBell';
 import { NavLinks } from './Links';
 import Button from '../global/Button';
 import { auth } from '@/lib/firebase/client';
@@ -74,7 +75,8 @@ export default function Navbar() {
                 <div className="navbar-center hidden lg:flex">
                     <NavLinks />
                 </div>
-                <div className="navbar-end lg:gap-3">
+                <div className="navbar-end flex items-center gap-2 lg:gap-3">
+                    <NotificationBell />
                     <ToggleTheme />
                     {user ? (
                         <div ref={menuRef} className="relative hidden md:block">
@@ -125,7 +127,7 @@ export default function Navbar() {
                             )}
                         </div>
                     ) : (
-                        <Button text="Create account" rounded href="/register" />
+                        <Button text="Create account" rounded href="/register" smd={false} />
                     )}
                 </div>
             </div>

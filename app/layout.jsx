@@ -1,5 +1,6 @@
 import { Outfit } from "next/font/google";
 import "./globals.css";
+import Providers from "./providers";
 
 const outfit = Outfit({
     variable: "--font-geist-sans",
@@ -18,7 +19,7 @@ export default function RootLayout({ children }) {
             <body
                 className={`${outfit.variable} antialiased`}
             >
-                {children}
+                <Providers>{children}</Providers>
             </body>
         </html>
     );

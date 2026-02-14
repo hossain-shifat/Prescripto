@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { useNotifications } from '@/context/NotificationContext';
 import Image from 'next/image';
 import { auth } from '@/lib/firebase/client';
 import { FirebaseError } from 'firebase/app';
@@ -74,6 +75,7 @@ const formatPhoneNumberForStorage = (value = '') => {
 };
 
 export default function RegisterPage() {
+    const { addNotification } = useNotifications();
     const [showPassword, setShowPassword] = useState(false);
     const [profileImage, setProfileImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
@@ -160,6 +162,11 @@ export default function RegisterPage() {
             });
 
             await sendEmailVerification(credential.user, actionCodeSettings);
+            addNotification({
+                title: 'Account created',
+                description: `Verification link sent to ${data.email}`,
+                type: 'success',
+            });
             router.push(`/verify?email=${encodeURIComponent(data.email)}&from=register`);
         } catch (error) {
             if (error instanceof FirebaseError) {

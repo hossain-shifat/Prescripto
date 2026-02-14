@@ -4,17 +4,21 @@ import Card from "@/components/global/Card";
 import { Info, Verified, X } from "lucide-react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { auth } from "@/lib/firebase/client";
 import { onAuthStateChanged } from "firebase/auth";
+import { useNotifications } from "@/context/NotificationContext";
 
 export default function DoctorDetails() {
     const params = useParams()
     const router = useRouter()
+    const { addNotification } = useNotifications()
 
     const [authChecked, setAuthChecked] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
+    const [appointmentStatus, setAppointmentStatus] = useState(null);
+    const [feedbackMessage, setFeedbackMessage] = useState('');
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
@@ -30,6 +34,12 @@ export default function DoctorDetails() {
     }, [router]);
 
     const doctor = doctors.find(doc => doc._id === params.id)
+    const appointmentSummary = useMemo(() => {
+        if (selectedDate && selectedTime) {
+            return `${selectedDate.day} ${selectedDate.date} at ${selectedTime}`;
+        }
+        return '';
+    }, [selectedDate, selectedTime]);
 
     if (!authChecked) {
         return (
@@ -75,13 +85,37 @@ export default function DoctorDetails() {
     ];
 
     const handleBookAppointment = () => {
-        if (selectedDate && selectedTime) {
-            console.log('Selected Date:', selectedDate);
-            console.log('Selected Time:', selectedTime);
-            alert(`Appointment booked for ${selectedDate.day} ${selectedDate.date} at ${selectedTime}`);
-        } else {
-            alert('Please select both date and time');
+        if (!selectedDate || !selectedTime) {
+            setFeedbackMessage('Please select both date and time.');
+            return;
         }
+
+        setAppointmentStatus('booked');
+        setFeedbackMessage(`Appointment requested for ${appointmentSummary}.`);
+        addNotification({
+            title: 'Appointment placed',
+            description: appointmentSummary,
+            type: 'success',
+        });
+    };
+
+    const handleAppointmentDecision = (decision) => {
+        if (!appointmentSummary) {
+            return;
+        }
+
+        const isAccepted = decision === 'accepted';
+        const type = isAccepted ? 'success' : 'error';
+        const title = isAccepted ? 'Appointment accepted' : 'Appointment rejected';
+        const summary = `${appointmentSummary}`;
+
+        setAppointmentStatus(decision);
+        setFeedbackMessage(isAccepted ? 'Appointment confirmed.' : 'Appointment rejected.');
+        addNotification({
+            title,
+            description: `You ${isAccepted ? 'accepted' : 'rejected'} the appointment for ${summary}.`,
+            type,
+        });
     };
 
     return (
@@ -190,6 +224,27 @@ export default function DoctorDetails() {
                         >
                             Book an appointment
                         </button>
+                        {feedbackMessage && (
+                            <p className="mt-2 text-sm text-base-content/80">{feedbackMessage}</p>
+                        )}
+                        {appointmentSummary && appointmentStatus && (
+                            <div className="mt-3 flex flex-wrap gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => handleAppointmentDecision('accepted')}
+                                    className="btn btn-sm btn-success rounded-full px-4 uppercase tracking-[0.3em]"
+                                >
+                                    Accept appointment
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => handleAppointmentDecision('rejected')}
+                                    className="btn btn-sm btn-error rounded-full px-4 uppercase tracking-[0.3em]"
+                                >
+                                    Reject appointment
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

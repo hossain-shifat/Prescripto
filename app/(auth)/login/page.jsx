@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { useNotifications } from '@/context/NotificationContext';
 import { auth } from '@/lib/firebase/client';
 import { sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth';
 
@@ -26,6 +27,7 @@ const getFirebaseErrorMessage = (error) => {
 };
 
 export default function LoginPage() {
+    const { addNotification } = useNotifications();
     const [showPassword, setShowPassword] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [firebaseError, setFirebaseError] = useState('');
@@ -49,6 +51,12 @@ export default function LoginPage() {
                 router.push(`/verify?email=${encodeURIComponent(data.email)}&from=login`);
                 return;
             }
+
+            addNotification({
+                title: 'Signed in',
+                description: `Logged in as ${credential.user.email}`,
+                type: 'success',
+            });
 
             router.push('/');
         } catch (error) {

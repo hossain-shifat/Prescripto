@@ -10,6 +10,7 @@ import { FirebaseError } from 'firebase/app';
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
 import { buildVerificationActionCodeSettings } from '@/lib/firebase/actionCode';
 import { persistUserProfile } from '@/lib/api/users';
+import SocialLogin from '@/components/global/SocialLogin';
 
 const getRegisterErrorMessage = (error) => {
     switch (error.code) {
@@ -154,6 +155,7 @@ export default function RegisterPage() {
                 role: data.role ?? 'user',
                 photoUrl,
                 accountCreatedAt: accountCreationTime,
+                signInMethod: 'email password',
             });
 
             const actionCodeSettings = buildVerificationActionCodeSettings({
@@ -178,6 +180,27 @@ export default function RegisterPage() {
             }
         } finally {
             setIsSubmitting(false);
+        }
+    };
+
+    const handleSocialLoginSuccess = async (user) => {
+        if (!user) {
+            return;
+        }
+
+            try {
+                await persistUserProfile({
+                    uid: user.uid,
+                    email: user.email,
+                    fullName: user.displayName ?? '',
+                    phone: user.phoneNumber ?? '',
+                    photoUrl: user.photoURL ?? '',
+                    accountCreatedAt: user.metadata?.creationTime,
+                    signInMethod: 'google',
+                    emailVerified: user.emailVerified,
+                });
+        } catch (error) {
+            console.error('Error persisting social login profile', error);
         }
     };
 
@@ -226,7 +249,6 @@ export default function RegisterPage() {
                         Please sign up to book appointment
                     </p>
                 </div>
-
                 {/* Profile Image Upload */}
                 <div className="flex flex-col items-center mb-6 relative z-10">
                     <div className="relative mb-2">
@@ -465,6 +487,16 @@ export default function RegisterPage() {
                         </p>
                     </div>
                 </form>
+                <div className="mt-6 space-y-3 text-center relative z-10">
+                    <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-[#9ca3af] px-6">
+                        <span className="h-px flex-1 bg-base-200" />
+                        <span>or</span>
+                        <span className="h-px flex-1 bg-base-200" />
+                    </div>
+                    <div className="mx-auto w-full max-w-sm">
+                        <SocialLogin redirectTo="/" onSuccess={handleSocialLoginSuccess} />
+                    </div>
+                </div>
             </div>
 
             <style jsx>{`

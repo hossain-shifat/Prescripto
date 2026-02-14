@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form';
 import { useNotifications } from '@/context/NotificationContext';
 import { auth } from '@/lib/firebase/client';
 import { sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth';
+import SocialLogin from '@/components/global/SocialLogin';
+import { persistUserProfile } from '@/lib/api/users';
 
 const getFirebaseErrorMessage = (error) => {
     const code = error?.code;
@@ -39,6 +41,27 @@ export default function LoginPage() {
         formState: { errors },
     } = useForm();
 
+    const persistLoginActivity = async (user, method = 'email password') => {
+        if (!user) {
+            return;
+        }
+
+        try {
+            await persistUserProfile({
+                uid: user.uid,
+                email: user.email,
+                fullName: user.displayName ?? '',
+                phone: user.phoneNumber ?? '',
+                photoUrl: user.photoURL ?? '',
+                accountCreatedAt: user.metadata?.creationTime,
+                signInMethod: method,
+                emailVerified: user.emailVerified,
+            });
+        } catch (error) {
+            console.error('Error persisting login activity', error);
+        }
+    };
+
     const onSubmit = async (data) => {
         setIsSubmitting(true);
         setFirebaseError('');
@@ -52,6 +75,7 @@ export default function LoginPage() {
                 return;
             }
 
+            await persistLoginActivity(credential.user, 'email password');
             addNotification({
                 title: 'Signed in',
                 description: `Logged in as ${credential.user.email}`,
@@ -64,6 +88,10 @@ export default function LoginPage() {
         } finally {
             setIsSubmitting(false);
         }
+    };
+
+    const handleSocialLoginSuccess = async (user) => {
+        await persistLoginActivity(user, 'google');
     };
 
     return (
@@ -219,6 +247,16 @@ export default function LoginPage() {
                         </p>
                     </div>
                 </form>
+                <div className="mt-6 space-y-3 text-center">
+                    <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-[#9ca3af] px-6">
+                        <span className="h-px flex-1 bg-base-200" />
+                        <span>or</span>
+                        <span className="h-px flex-1 bg-base-200" />
+                    </div>
+                    <div className="mx-auto w-full max-w-sm">
+                        <SocialLogin redirectTo="/" onSuccess={handleSocialLoginSuccess} />
+                    </div>
+                </div>
             </div>
 
             <style jsx>{`

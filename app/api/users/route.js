@@ -2,11 +2,22 @@ import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb';
 
 const VALID_ROLES = new Set(['user', 'doctor']);
+const VALID_SIGNIN_METHODS = new Set(['email password', 'google']);
 
 export async function POST(request) {
     try {
         const payload = await request.json();
-        const { uid, email, fullName, phone, role, photoUrl, accountCreatedAt, emailVerified } = payload ?? {};
+        const {
+            uid,
+            email,
+            fullName,
+            phone,
+            role,
+            photoUrl,
+            accountCreatedAt,
+            emailVerified,
+            signInMethod,
+        } = payload ?? {};
 
         if (!uid || !email) {
             return NextResponse.json({
@@ -65,6 +76,13 @@ export async function POST(request) {
         if (typeof emailVerifiedFlag === 'undefined') {
             setOnInsertPayload.emailVerified = false;
             setOnInsertPayload.verifiedAt = null;
+        }
+
+        const normalizedSignInMethod =
+            typeof signInMethod === 'string' ? signInMethod.trim().toLowerCase() : undefined;
+        if (normalizedSignInMethod && VALID_SIGNIN_METHODS.has(normalizedSignInMethod)) {
+            updatePayload.signInMethod = normalizedSignInMethod;
+            setOnInsertPayload.signInMethod = normalizedSignInMethod;
         }
 
         await usersCollection.updateOne(
